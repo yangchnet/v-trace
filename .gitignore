@@ -26,6 +26,5 @@ sdk.*
 configs.yaml
 
 .DS_Store
-build/chainmaker/bin/chainmaker
 
 
