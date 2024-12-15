@@ -1,0 +1,132 @@
+version: "3"
+
+services:
+  vtrace_mysql:
+    image: vtrace/mysql:latest
+    container_name: vtrace-mysql-runtime
+    ports:
+      - 13306:13306
+    command:
+      [
+        "mysqld",
+        "--character-set-server=utf8mb4",
+        "--collation-server=utf8mb4_unicode_ci",
+      ]
+    environment:
+      - MYSQL_ROOT_PASSWORD=insecure
+    volumes:
+      - ~/.vtrace-data/mysql:/var/lib/mysql
+    restart: always
+
+  vtrace_redis:
+    image: vtrace/redis:latest
+    container_name: vtrace-redis-runtime
+    volumes:
+      - ~/.vtrace-data/redis:/data
+    ports:
+      - 16379:16379
+    restart: always
+
+  # node1:
+  #   container_name: cm-solo
+  #   image: chainmakerofficial/chainmaker:v2.3.0
+  #   restart: always
+  #   working_dir: "/chainmaker-go/bin"
+  #   command: "./chainmaker start -c ../config/org1/chainmaker.yml > panic.log"
+  #   ports:
+  #     - "11301:11301"
+  #     - "12301:12301"
+  #   volumes:
+  #     - ../chainmaker/config/org1:/chainmaker-go/config/org1
+  #     - ~/.vtrace-data/chainmaker/data:/chainmaker-go/data
+  #     - ~/.vtrace-data/chainmaker/log:/chainmaker-go/log
+  #   networks:
+  #     v-trace-net:
+  #       ipv4_address: 172.33.2.2
+  node1:
+    container_name: cm-solo
+    image: vtrace/chainmaker:latest
+    restart: always
+    ports:
+      - 11301:11301
+      - 12301:12301
+    volumes:
+      - ~/.vtrace-data/chainmaker/data:/chainmaker-go/data
+      - ~/.vtrace-data/chainmaker/log:/chainmaker-go/log
+    networks:
+      v-trace-net:
+        ipv4_address: 172.33.2.2
+
+  cm_db:
+    image: mysql:5.7
+    container_name: cm_db
+    volumes:
+      - ~/.vtrace-data/chainmaker/db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Baec&chainmaker
+      MYSQL_USER: chainmaker
+      MYSQL_PASSWORD: Baec&chainmaker
+      MYSQL_DATABASE: chainmaker_dev
+    command:
+      [
+        "mysqld",
+        "--character-set-server=utf8mb4",
+        "--collation-server=utf8mb4_unicode_ci",
+        "--max_allowed_packet=200M",
+      ]
+    networks:
+      v-trace-net:
+        ipv4_address: 172.33.2.3
+
+  cm_mgmt_server:
+    depends_on:
+      - cm_db
+    image: chainmakerofficial/management-backend:v2.3.0
+    container_name: cm_mgmt_server
+    ports:
+      - "9999:9999"
+    restart: always
+    networks:
+      v-trace-net:
+        ipv4_address: 172.33.2.4
+
+  cm_mgmt_web:
+    depends_on:
+      - cm_mgmt_server
+    image: chainmakerofficial/management-web:v2.3.0
+    container_name: cm_mgmt_web
+    ports:
+      - "8080:80"
+    restart: always
+    networks:
+      v-trace-net:
+        ipv4_address: 172.33.2.5
+
+  registry-etcd:
+    image: "bitnami/etcd:latest"
+    container_name: registry-etcd
+    restart: always
+    environment:
+      - ALLOW_NONE_AUTHENTICATION=yes
+      - ETCD_ADVERTISE_CLIENT_URLS=http://etcd:2379
+    ports:
+      - 2379:2379
+      - 2380:2380
+
+  vtrace_tf_serving:
+    image: renpengju/spectra_predict:0.1
+    container_name: tf-serving
+    restart: on-failure
+    ports:
+      - 8500:8500
+    networks:
+      v-trace-net:
+        ipv4_address: 172.33.2.18
+
+networks:
+  v-trace-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.33.2.0/16

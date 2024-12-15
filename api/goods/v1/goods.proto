@@ -1,0 +1,204 @@
+syntax = "proto3";
+
+package goods.v1;
+
+option go_package = "gitee.com/qciip-icp/v-trace/api/goods/v1;v1";
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "goods/v1/model.proto";
+
+service GoodsService {
+  // CreateClass 创建产品类型
+  rpc CreateClass(CreateClassRequest) returns (CreateClassResponse) {};
+
+  // CreateSerial 创建产品批次
+  rpc CreateSerial(CreateSerialRequest) returns (CreateSerialResponse) {};
+
+  // CreateGoods 批量创建产品
+  rpc BatchCreateGoods(BatchCreateGoodsRequest)
+      returns (BatchCreateGoodsResponse) {};
+
+  // GetGoods 根据id获取商品信息
+  rpc GetGoods(GetGoodsRequest) returns (GetGoodsResponse) {};
+
+  // GetClass 根据id获取商品类型
+  rpc GetClass(GetClassRequest) returns (GetClassResponse) {};
+
+  // GetSerial 根据id获取商品批次
+  rpc GetSerial(GetSerialRequest) returns (GetSerialResponse) {};
+
+  // ListGoodsClass 列出产品类型
+  rpc ListGoodsClass(ListGoodsClassRequest) returns (ListGoodsClassResponse) {}
+
+  // ListGoodsSerial 列出产品批次
+  rpc ListGoodsSerial(ListGoodsSerialRequest)
+      returns (ListGoodsSerialResponse) {}
+
+  // ListGoods 列出产品
+  rpc ListGoods(ListGoodsRequest) returns (ListGoodsResponse) {}
+
+  // 更新产品类型信息
+  rpc UpdateGoodsClass(UpdateGoodsClassRequest)
+      returns (UpdateGoodsClassResponse) {}
+
+  // UpdateGoodsSerial 更新产品批次信息
+  rpc UpdateGoodsSerial(UpdateGoodsSerialRequest)
+      returns (UpdateGoodsSerialResponse) {}
+
+  // UpdateGoods 更新产品
+  rpc UpdateGoods(UpdateGoodsRequest) returns (UpdateGoodsResponse) {}
+
+  // GetOrgOfX 获取产品/类型/批次所属企业
+  rpc GetOrgOfX(GetOrgOfXRequest) returns (GetOrgOfXResponse) {}
+}
+
+message CreateClassRequest {
+  // 产品类型名称
+  string goods_name = 1;
+  // 产品类型说明(json)
+  google.protobuf.BytesValue goods_des = 2;
+  // 产品原材料类型
+  int32 material = 3;
+  // 生产企业编号
+  int32 org_id = 4;
+  // 商标编号(optional)
+  google.protobuf.StringValue tm = 5;
+}
+
+message CreateClassResponse {
+  // 产品类别号
+  google.protobuf.Int32Value goods_id = 2;
+}
+
+message CreateSerialRequest {
+  // 生产日期
+  google.protobuf.Timestamp product_time = 1;
+  // 产品种类号
+  int32 class_id = 2;
+}
+
+message CreateSerialResponse {
+  // 产品批次号
+  google.protobuf.Int32Value serial_id = 2;
+}
+
+message BatchCreateGoodsRequest {
+  // 产品批次id
+  int32 serial_id = 1;
+  // 本批次产品数量
+  int32 sum = 2;
+}
+
+message BatchCreateGoodsResponse {
+  // 产品编号列表
+  repeated google.protobuf.Int32Value ids = 2;
+}
+
+// 获取类型
+message GetClassRequest {
+  // 产品类别号
+  int32 goods_id = 1;
+}
+
+message GetClassResponse {
+  // 产品类别号
+  goods.v1.Class class = 1;
+}
+
+// 获取批次
+message GetSerialRequest {
+  // 产品种类号
+  int32 serial_id = 1;
+}
+
+message GetSerialResponse {
+  // 产品批次号
+  goods.v1.Serial serial = 1;
+}
+
+// 获取商品
+message GetGoodsRequest { int32 goods_id = 1; }
+
+message GetGoodsResponse { goods.v1.Goods good = 1; }
+
+// 列出产品类型
+message ListGoodsClassRequest {
+  // 页偏移
+  int32 offset = 1;
+  // 页容量
+  int32 limit = 2;
+  // 企业id
+  int32 org_id = 3;
+}
+
+message ListGoodsClassResponse {
+  // 产品类型列表
+  repeated goods.v1.Class goods_classes = 1;
+}
+
+// 更新产品类型信息
+message UpdateGoodsClassRequest {
+  // 待更新信息
+  goods.v1.Class class = 2;
+}
+
+message UpdateGoodsClassResponse { bool ok = 1; }
+
+message ListGoodsSerialRequest {
+  // 页偏移
+  int32 offset = 1;
+  // 页容量
+  int32 limit = 2;
+  // 企业id
+  int32 org_id = 3;
+}
+
+message ListGoodsSerialResponse {
+  // 产品编号列表
+  repeated goods.v1.Serial serial = 2;
+}
+
+// 列出产品
+message ListGoodsRequest {
+  // 页偏移
+  int32 offset = 1;
+  // 页容量
+  int32 limit = 2;
+  // 企业id
+  int32 org_id = 3;
+}
+
+message ListGoodsResponse { repeated goods.v1.Goods goods = 1; }
+
+// 更新产品
+message UpdateGoodsRequest {
+  // 待更新商品
+  goods.v1.Goods goods = 1;
+}
+
+message UpdateGoodsResponse { bool ok = 1; }
+
+message UpdateGoodsSerialRequest {
+  // 待更新产品批次
+  goods.v1.Serial serial = 1;
+}
+
+message UpdateGoodsSerialResponse { bool ok = 1; }
+
+message GetOrgOfXRequest {
+  X x = 1;
+  int32 id = 2;
+
+  enum X {
+    class = 0;
+    serial = 1;
+    goods = 2;
+  }
+}
+
+message GetOrgOfXResponse {
+  // 企业id
+  google.protobuf.Int32Value org_id = 1;
+}

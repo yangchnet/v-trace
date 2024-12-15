@@ -1,0 +1,28 @@
+_format_version: "3.0"
+_transform: true
+
+services:
+  - host: vtrace
+    name: vtrace-service
+    port: 10001
+    protocol: http
+    routes:
+      - name: vtrace-route
+        protocols:
+          - "http"
+        paths:
+          - /api
+        strip_path: false
+      - name: openapi
+        protocols:
+          - "http"
+        paths:
+          - /openapi-ui
+        strip_path: false
+    plugins:
+      - name: rate-limiting
+        service: vtrace-service
+        config:
+          second: 100 # 每秒允许请求数
+          hour: 10000 # 每小时允许请求数
+          policy: local

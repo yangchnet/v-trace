@@ -1,0 +1,261 @@
+version: "3"
+
+services:
+  node1:
+    container_name: cm-solo
+    image: vtrace/chainmaker:latest
+    restart: always
+    ports:
+      - 11301:11301
+      - 12301:12301
+    volumes:
+      - ~/.vtrace-data/chainmaker/data:/chainmaker-go/data
+      - ~/.vtrace-data/chainmaker/log:/chainmaker-go/log
+    networks:
+      v-trace-net:
+        ipv4_address: 172.33.2.2
+
+  cm_db:
+    image: mysql:5.7
+    volumes:
+      - ~/.vtrace-data/chainmaker/db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Baec&chainmaker
+      MYSQL_USER: chainmaker
+      MYSQL_PASSWORD: Baec&chainmaker
+      MYSQL_DATABASE: chainmaker_dev
+    command:
+      [
+        "mysqld",
+        "--character-set-server=utf8mb4",
+        "--collation-server=utf8mb4_unicode_ci",
+        "--max_allowed_packet=200M",
+      ]
+    networks:
+      v-trace-net:
+        ipv4_address: 172.33.2.3
+
+  cm_mgmt_server:
+    depends_on:
+      - cm_db
+    image: chainmakerofficial/management-backend:v2.3.0
+    ports:
+      - "9999:9999"
+    restart: always
+    networks:
+      v-trace-net:
+        ipv4_address: 172.33.2.4
+
+  cm_mgmt_web:
+    depends_on:
+      - cm_mgmt_server
+    image: chainmakerofficial/management-web:v2.3.0
+    ports:
+      - "18080:80"
+    restart: always
+    networks:
+      v-trace-net:
+        ipv4_address: 172.33.2.5
+
+  vtrace_mysql:
+    image: vtrace/mysql:latest
+    container_name: vtrace-mysql-runtime
+    ports:
+      - 13306:13306
+    command:
+      [
+        "mysqld",
+        "--character-set-server=utf8mb4",
+        "--collation-server=utf8mb4_unicode_ci",
+      ]
+    environment:
+      - MYSQL_ROOT_PASSWORD=insecure
+    volumes:
+      - ~/.vtrace-data/mysql:/var/lib/mysql
+    restart: always
+    networks:
+      v-trace-net:
+        ipv4_address: 172.33.2.6
+
+  vtrace_redis:
+    image: vtrace/redis:latest
+    container_name: vtrace-redis-runtime
+    ports:
+      - 16379:16379
+    volumes:
+      - ~/.vtrace-data/redis:/data
+    restart: always
+    networks:
+      v-trace-net:
+        ipv4_address: 172.33.2.7
+
+  vtrace_iam:
+    image: vtrace/iam:latest
+    container_name: vtrace-iam-service
+    restart: on-failure
+    volumes:
+      - ~/.vtrace-data/log:/tmp/log
+    depends_on:
+      - vtrace_mysql
+      - vtrace_redis
+      - registry-etcd
+    networks:
+      v-trace-net:
+        ipv4_address: 172.33.2.10
+
+  vtrace_goods:
+    image: vtrace/goods:latest
+    container_name: vtrace-goods-service
+    restart: on-failure
+    volumes:
+      - ~/.vtrace-data/log:/tmp/log
+    depends_on:
+      - vtrace_mysql
+      - vtrace_redis
+      - registry-etcd
+    networks:
+      v-trace-net:
+        ipv4_address: 172.33.2.11
+
+  vtrace_ca:
+    image: vtrace/ca:latest
+    container_name: vtrace-ca-service
+    volumes:
+      - ~/.vtrace-data/log:/tmp/log
+    restart: on-failure
+    depends_on:
+      - vtrace_mysql
+      - vtrace_redis
+      - registry-etcd
+    networks:
+      v-trace-net:
+        ipv4_address: 172.33.2.12
+
+  vtrace_trans:
+    image: vtrace/trans:latest
+    container_name: vtrace-trans-service
+    restart: on-failure
+    volumes:
+      - ~/.vtrace-data/log:/tmp/log
+    depends_on:
+      - vtrace_mysql
+      - vtrace_redis
+      - registry-etcd
+      - node1
+    networks:
+      v-trace-net:
+        ipv4_address: 172.33.2.13
+
+  vtrace_trans-job:
+    image: vtrace/trans-job:latest
+    container_name: vtrace-trans-cron
+    volumes:
+      - ~/.vtrace-data/log:/tmp/log
+    restart: on-failure
+    depends_on:
+      - vtrace_mysql
+      - vtrace_trans
+      - registry-etcd
+      - node1
+    networks:
+      v-trace-net:
+        ipv4_address: 172.33.2.14
+
+  vtrace:
+    image: vtrace/vtrace:latest
+    container_name: vtrace-service
+    volumes:
+      - ~/.vtrace-data/log:/tmp/log
+    restart: on-failure
+    depends_on:
+      - vtrace_iam
+      - registry-etcd
+    # ports:
+    #   - 10001:10001
+    networks:
+      v-trace-net:
+        ipv4_address: 172.33.2.15
+
+  vtrace-admin:
+    image: dockerslc/vtrace:admin
+    container_name: vtrace-admin
+    restart: on-failure
+    ports:
+      - 10020:10020
+    depends_on:
+      - vtrace_mysql
+    networks:
+      v-trace-net:
+        ipv4_address: 172.33.2.16
+
+  vtrace_circ:
+    image: vtrace/circ:latest
+    container_name: vtrace-circ-service
+    restart: on-failure
+    volumes:
+      - ~/.vtrace-data/log:/tmp/log
+    depends_on:
+      - vtrace_mysql
+      - vtrace_redis
+      - registry-etcd
+    networks:
+      v-trace-net:
+        ipv4_address: 172.33.2.17
+
+  vtrace_tf_serving:
+    image: renpengju/spectra_predict:0.1
+    container_name: tf-serving
+    restart: on-failure
+    ports:
+      - 8500:8500
+    networks:
+      v-trace-net:
+        ipv4_address: 172.33.2.18
+
+  vtrace_algo:
+    image: vtrace/algo:latest
+    container_name: vtrace-algo-service
+    restart: on-failure
+    volumes:
+      - ~/.vtrace-data/log:/tmp/log
+    depends_on:
+      - vtrace_mysql
+      - vtrace_redis
+      - registry-etcd
+      - vtrace_tf_serving
+    networks:
+      v-trace-net:
+        ipv4_address: 172.33.2.19
+
+  registry-etcd:
+    image: "bitnami/etcd:latest"
+    restart: always
+    container_name: registry-etcd
+    environment:
+      - ALLOW_NONE_AUTHENTICATION=yes
+      - ETCD_ADVERTISE_CLIENT_URLS=http://etcd:2379
+    ports:
+      - 2379:2379
+      - 2380:2380
+    networks:
+      v-trace-net:
+        ipv4_address: 172.33.2.20
+
+  kong-gateway:
+    image: vtrace/kong-gateway:latest
+    restart: always
+    container_name: kong-gateway
+    ports:
+      - 18001:8001
+      - 18000:8000
+    networks:
+      v-trace-net:
+        ipv4_address: 172.33.2.21
+
+networks:
+  v-trace-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.33.2.0/16

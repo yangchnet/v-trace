@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package algo.v1;
+
+option go_package = "gitee.com/qciip-icp/v-trace/api/algo/v1;v1";
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/struct.proto";
+
+message Model {
+  // id
+  google.protobuf.Int64Value ID = 6;
+  // 模型名称
+  google.protobuf.StringValue name = 1;
+  // 模型版本
+  google.protobuf.Int64Value version = 2;
+  // 模型状态
+  google.protobuf.StringValue state = 3;
+  // 模型描述(text)
+  google.protobuf.StringValue des = 4;
+  // metadata
+  map<string, google.protobuf.Value> metadata = 5;
+}
+
+message Material {
+  // 原料编号
+  google.protobuf.Int64Value id = 1;
+  // 原料正式名称
+  google.protobuf.StringValue name = 2;
+  // 原料别名
+  google.protobuf.StringValue alias = 3;
+  // 原料描述
+  google.protobuf.StringValue des = 4;
+  // 可用于此材料的模型，可能为空
+  repeated Model available_models = 5;
+}

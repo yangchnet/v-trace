@@ -1,0 +1,1 @@
+ALTER TABLE `trans_record` MODIFY `txHash` varchar(100) NOT NULL UNIQUE;

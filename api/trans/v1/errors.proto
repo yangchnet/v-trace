@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package trans.v1;
+
+option go_package = "gitee.com/qciip-icp/v-trace/api/trans/v1;v1";
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "error/error.proto";
+
+enum Error {
+  // 默认500
+  option (errors.default_code) = 500;
+
+  // 未找到交易记录
+  RECORD_NOT_FOUND = 0 [ (errors.code) = 404 ];
+
+  // 记录重复
+  DUPLICATE_ERR = 1 [ (errors.code) = 400 ];
+
+  // 已存在的交易
+  TRANS_ALREADY_EXIST = 2 [ (errors.code) = 400 ];
+}

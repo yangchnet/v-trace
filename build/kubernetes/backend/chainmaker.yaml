@@ -1,0 +1,139 @@
+# 区块链 Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: cm-node-service
+spec:
+  selector:
+    app: cm-node
+  ports:
+    - port: 12301
+      targetPort: 12301
+      name: client
+    - port: 11301
+      targetPort: 11301
+      name: peer
+
+---
+# 区块链Storage
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: cm-data-storage
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
+---
+# 区块链数据PV
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: cm-data-pv
+spec:
+  capacity:
+    storage: 10Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: cm-data-storage
+  local:
+    path: /home/lc/vtrace-data/chainmaker/data
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - node3
+---
+# 区块链日志PV
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: cm-log-pv
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: cm-data-storage
+  local:
+    path: /home/lc/vtrace-data/chainmaker/log
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - node3
+---
+# 区块链数据PVC
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: cm-data-pvc
+spec:
+  resources:
+    requests:
+      storage: 10Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: cm-data-storage
+---
+# 区块链日志PVC
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: cm-log-pvc
+spec:
+  resources:
+    requests:
+      storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: cm-data-storage
+---
+# 区块链应用
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: cm-node
+  labels:
+    app: cm-node
+spec:
+  selector:
+    matchLabels:
+      app: cm-node
+  serviceName: cm-node-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: cm-node
+    spec:
+      containers:
+        - name: cm-node
+          image: dockerslc/vtrace-chainmaker
+          ports:
+            - containerPort: 12301
+              name: client
+            - containerPort: 11301
+              name: peer
+          volumeMounts:
+            - name: cm-node-data
+              mountPath: /chainmaker-go/data/
+            - name: cm-log-data
+              mountPath: /chainmaker-go/log/
+      volumes:
+        - name: cm-node-data
+          persistentVolumeClaim:
+            claimName: cm-data-pvc
+        - name: cm-log-data
+          persistentVolumeClaim:
+            claimName: cm-log-pvc

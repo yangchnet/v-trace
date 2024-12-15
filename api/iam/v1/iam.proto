@@ -1,0 +1,216 @@
+syntax = "proto3";
+
+package iam.v1;
+
+option go_package = "gitee.com/qciip-icp/v-trace/api/iam/v1;v1";
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "iam/v1/model.proto";
+
+service IamService {
+  // Token
+  rpc Token(TokenRequest) returns (TokenResponse) {};
+
+  // RefreshToken 更新令牌
+  rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse) {};
+
+  // CreateUser 创建一个新用户
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {};
+
+  // DeleteUser 删除用户
+  // 1. delete user entity
+  // 2. delete user's role relation
+  // 3. delete member from org
+  rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse) {};
+
+  // GetUser 根据用户名获取用户信息
+  rpc GetUser(GetUserRequest) returns (GetUserResponse) {};
+
+  // UpdateUser 用户信息更新
+  rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse) {}
+
+  // GetRole 根据用户名获取用户角色
+  rpc GetRole(GetRoleRequest) returns (GetRoleResponse) {};
+
+  // CreateOrg 创建一个企业组织
+  // this api should do:
+  // 1. create an org
+  // 2. add caller as org member
+  // 3. grant caller boss role
+  rpc CreateOrg(CreateOrgRequest) returns (CreateOrgResponse) {};
+
+  // OrgAddMember 企业增加成员
+  // this api should do:
+  // 1. add member to org
+  // 2. grant producer role to member
+  rpc OrgAddMember(OrgAddMemberRequest) returns (OrgAddMemberResponse) {};
+
+  // GetOrg 获取企业信息
+  rpc GetOrg(GetOrgRequest) returns (GetOrgResponse) {};
+
+  // DeleteOrgMember 企业删除成员
+  // 1. delete member
+  // 2. remove producer role
+  rpc DeleteOrgMember(DeleteOrgMemberRequest)
+      returns (DeleteOrgMemberResponse) {};
+
+  // ListOrgMember 企业查询成员列表
+  rpc ListOrgMember(ListOrgMemberRequest) returns (ListOrgMemberResponse) {};
+
+  // UpdateOrg 企业信息更新
+  rpc UpdateOrg(UpdateOrgRequest) returns (UpdateOrgResponse) {};
+
+  // 记录实名信息
+  // 1. 记录实名信息
+  // 2. 授予transporter权限
+  rpc CreateIdentity(CreateIdentityRequest) returns (CreateIdentityResponse) {};
+
+  // 查询用户所属企业
+  rpc GetOrgOfUser(GetOrgOfUserRequest) returns (GetOrgOfUserResponse) {};
+}
+
+message TokenRequest {
+  // 手机号
+  string phone = 1;
+  // 密码
+  string passwd = 2;
+}
+
+message TokenResponse {
+  // token
+  google.protobuf.StringValue token = 1;
+}
+
+message RefreshTokenRequest {}
+
+message RefreshTokenResponse {
+  // token
+  google.protobuf.StringValue token = 1;
+}
+
+// User Manage
+message CreateUserRequest {
+  // 暱称, 必填
+  string nickname = 1;
+  // 密码, 必填
+  string password = 2;
+  // 手机号码，要求符合11位数字格式, 必填
+  string phone = 3;
+  // 邮箱（选填）
+  google.protobuf.StringValue email = 4;
+  // 头像 （选填）
+  google.protobuf.StringValue avatar = 5;
+}
+
+message CreateUserResponse { iam.v1.User user = 1; }
+
+message DeleteUserRequest {
+  // 唯一用户名
+  string username = 1;
+}
+
+message DeleteUserResponse {
+  // 操作结果
+  OperationResult result = 1;
+}
+
+message UpdateUserRequest { iam.v1.User user = 1; }
+
+message UpdateUserResponse { iam.v1.User user = 1; }
+
+message GetUserRequest { string username = 1; }
+
+message GetUserResponse {
+  // 用户信息
+  iam.v1.User user = 1;
+}
+
+// Role Manage
+
+message GetRoleRequest { string username = 1; }
+
+message GetRoleResponse { google.protobuf.StringValue role = 1; }
+
+message CreateOrgRequest {
+  // 企业所有者或管理员
+  string owner = 1;
+  // 企业名称
+  string org_name = 2;
+  // 企业社会信用代码
+  string org_code = 3;
+  // 企业法人姓名
+  string legal_name = 4;
+  // 企业法人手机号
+  string legal_phone = 5;
+  // 是否可进行产品生产
+  bool can_produce = 6;
+  // 企业信息(json)
+  bytes org_info = 7;
+}
+
+message CreateOrgResponse { iam.v1.Org org = 1; }
+
+message OrgAddMemberRequest {
+  // org id
+  int64 org_id = 1;
+  // 用户名
+  string username = 2;
+}
+
+message OrgAddMemberResponse { bool ok = 1; }
+
+message GetOrgRequest { int64 org_id = 1; }
+
+message GetOrgResponse { iam.v1.Org org = 1; }
+
+// RemoveOrgMember 企业删除成员
+message DeleteOrgMemberRequest {
+  // org id
+  int64 org_id = 1;
+  // 用户名
+  string username = 2;
+}
+
+message DeleteOrgMemberResponse { bool ok = 1; }
+
+// 企业查询成员列表
+message ListOrgMemberRequest {
+  int64 org_id = 1;
+  // 页偏移
+  int64 offset = 2;
+  // 页容量
+  int64 limit = 3;
+}
+
+message ListOrgMemberResponse { repeated iam.v1.User users = 1; }
+
+// 企业信息更新
+message UpdateOrgRequest {
+  // 待更新企业
+  iam.v1.Org org = 1;
+}
+
+message UpdateOrgResponse { iam.v1.Org org = 1; }
+
+message CreateIdentityRequest {
+  string username = 1;
+  string real_name = 2;
+  string id_card = 3;
+}
+
+message CreateIdentityResponse { iam.v1.User user = 1; }
+
+enum OperationResult {
+  SUCCESS = 0;
+  FAIL = 1;
+}
+
+// 查询用户所属企业
+message GetOrgOfUserRequest {
+  // 唯一用户名
+  string username = 1;
+}
+
+message GetOrgOfUserResponse { iam.v1.Org org = 1; }

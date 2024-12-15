@@ -1,0 +1,275 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "goods/v1/goods.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "GoodsService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {},
+  "definitions": {
+    "GetOrgOfXRequestX": {
+      "type": "string",
+      "enum": [
+        "class",
+        "serial",
+        "goods"
+      ],
+      "default": "class"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1BatchCreateGoodsResponse": {
+      "type": "object",
+      "properties": {
+        "ids": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "title": "产品编号列表"
+        }
+      }
+    },
+    "v1Class": {
+      "type": "object",
+      "properties": {
+        "ID": {
+          "type": "string",
+          "format": "int64",
+          "title": "id"
+        },
+        "name": {
+          "type": "string",
+          "title": "产品类别名称"
+        },
+        "des": {
+          "type": "string",
+          "format": "byte",
+          "title": "产品类别描述(json)"
+        },
+        "state": {
+          "type": "string",
+          "title": "状态"
+        },
+        "creator": {
+          "type": "string",
+          "title": "创建者"
+        },
+        "orgId": {
+          "type": "string",
+          "format": "int64",
+          "title": "生产企业"
+        },
+        "tm": {
+          "type": "string",
+          "title": "商标"
+        },
+        "materialId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "原料"
+        }
+      }
+    },
+    "v1CreateClassResponse": {
+      "type": "object",
+      "properties": {
+        "goodsId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "产品类别号"
+        }
+      }
+    },
+    "v1CreateSerialResponse": {
+      "type": "object",
+      "properties": {
+        "serialId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "产品批次号"
+        }
+      }
+    },
+    "v1GetClassResponse": {
+      "type": "object",
+      "properties": {
+        "class": {
+          "$ref": "#/definitions/v1Class",
+          "title": "产品类别号"
+        }
+      }
+    },
+    "v1GetGoodsResponse": {
+      "type": "object",
+      "properties": {
+        "good": {
+          "$ref": "#/definitions/v1Goods"
+        }
+      }
+    },
+    "v1GetOrgOfXResponse": {
+      "type": "object",
+      "properties": {
+        "orgId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "企业id"
+        }
+      }
+    },
+    "v1GetSerialResponse": {
+      "type": "object",
+      "properties": {
+        "serial": {
+          "$ref": "#/definitions/v1Serial",
+          "title": "产品批次号"
+        }
+      }
+    },
+    "v1Goods": {
+      "type": "object",
+      "properties": {
+        "ID": {
+          "type": "string",
+          "format": "int64",
+          "title": "id"
+        },
+        "state": {
+          "type": "string",
+          "title": "状态"
+        },
+        "creator": {
+          "type": "string",
+          "title": "创建者"
+        },
+        "serial": {
+          "$ref": "#/definitions/v1Serial",
+          "title": "批次"
+        }
+      }
+    },
+    "v1ListGoodsClassResponse": {
+      "type": "object",
+      "properties": {
+        "goodsClasses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Class"
+          },
+          "title": "产品类型列表"
+        }
+      }
+    },
+    "v1ListGoodsResponse": {
+      "type": "object",
+      "properties": {
+        "goods": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Goods"
+          }
+        }
+      }
+    },
+    "v1ListGoodsSerialResponse": {
+      "type": "object",
+      "properties": {
+        "serial": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Serial"
+          },
+          "title": "产品编号列表"
+        }
+      }
+    },
+    "v1Serial": {
+      "type": "object",
+      "properties": {
+        "ID": {
+          "type": "string",
+          "format": "int64",
+          "title": "id"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生产日期"
+        },
+        "state": {
+          "type": "string",
+          "title": "状态"
+        },
+        "creator": {
+          "type": "string",
+          "title": "创建者"
+        },
+        "class": {
+          "$ref": "#/definitions/v1Class",
+          "title": "类别"
+        }
+      }
+    },
+    "v1UpdateGoodsClassResponse": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "type": "boolean"
+        }
+      }
+    },
+    "v1UpdateGoodsResponse": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "type": "boolean"
+        }
+      }
+    },
+    "v1UpdateGoodsSerialResponse": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

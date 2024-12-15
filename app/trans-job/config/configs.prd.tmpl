@@ -1,0 +1,43 @@
+cron:
+  cron_name: trans_cron
+  jobs:
+    vtrace-trans-job: "@every 5s"
+pubsub:
+  host: vtrace_redis
+  port: 16379
+  ch_name: vtrace_task
+mq:
+  host: vtrace_redis
+  port: 16379
+redis:
+  host: vtrace_redis
+  port: 16379
+  password:
+  db: 0
+chainmaker:
+  nodes:
+    - addr: node1:12301
+      conn_cnt: 10
+      use_tls: true
+      ca_paths:
+        - build/chainmaker/config/org1/certs/ca/org1
+      tls_hostname: chainmaker.org
+  contract:
+    name: vtrace
+    version: 1.0.0
+    abi_path: build/chainmaker/contract/VTrace.abi
+    bin_path: build/chainmaker/contract/VTrace.bin
+  with_sync_result: true
+log:
+  level: 0 # 0: debug, 1: info, 2: warn, 3: error, 4: panic, 5, fatal
+  formatter: text # text/json
+  disable_caller: false # log中不记录文件名及行号
+  disable_color: false # 无颜色输出log
+  enable_abs_path: true # 输出文件名的完整的路径
+  enable_func: false # 输出打印log的函数名
+  ignore_basic_fields: false # 日志中不记录时间、文件等信息
+  output_file: tmp/log/trans-job.log
+etcd:
+  addresses:
+    - registry-etcd:2379
+  namespace: v-trace

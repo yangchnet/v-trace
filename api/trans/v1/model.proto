@@ -1,0 +1,54 @@
+syntax = "proto3";
+package trans.v1;
+
+option go_package = "gitee.com/qciip-icp/v-trace/api/trans/v1;v1";
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/struct.proto";
+
+message TransRecord {
+  // id
+  google.protobuf.Int64Value ID = 1;
+  // transID
+  google.protobuf.StringValue trans_id = 2;
+  // 交易发送者
+  google.protobuf.StringValue sender = 3;
+  // 调用合约名
+  google.protobuf.StringValue contract = 4;
+  // 调用方法名
+  google.protobuf.StringValue method = 5;
+  // 参数
+  google.protobuf.BytesValue params = 6;
+  // 状态
+  google.protobuf.StringValue status = 7;
+  // 交易hash
+  google.protobuf.StringValue tx_hash = 8;
+  // 交易参数hash
+  google.protobuf.StringValue tx_params_hash = 9;
+  // 创建时间
+  google.protobuf.Timestamp created_at = 10;
+  // 更改时间
+  google.protobuf.Timestamp updated_at = 11;
+}
+
+// 用于标识上链操作者身份
+message Identity {
+  // 用户证书sign
+  bytes cert = 1;
+  // 用户私钥sign
+  bytes key = 2;
+  // 用户名
+  google.protobuf.StringValue username = 3;
+  // tls证书
+  bytes tls_cert = 4;
+  // tls私钥
+  bytes tls_key = 5;
+}
+
+enum TransStatus {
+  waiting = 0;
+  failed = 1;
+  success = 2;
+}

@@ -1,0 +1,152 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "algo/v1/algo.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "AlgoService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {},
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "protobufNullValue": {
+      "type": "string",
+      "enum": [
+        "NULL_VALUE"
+      ],
+      "default": "NULL_VALUE",
+      "description": "`NullValue` is a singleton enumeration to represent the null value for the\n`Value` type union.\n\n The JSON representation for `NullValue` is JSON `null`.\n\n - NULL_VALUE: Null value."
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1ListMaterialsResponse": {
+      "type": "object",
+      "properties": {
+        "materials": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Material"
+          },
+          "title": "原料列表"
+        }
+      }
+    },
+    "v1ListModelsResponse": {
+      "type": "object",
+      "properties": {
+        "models": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Model"
+          },
+          "title": "模型列表"
+        }
+      }
+    },
+    "v1Material": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "原料编号"
+        },
+        "name": {
+          "type": "string",
+          "title": "原料正式名称"
+        },
+        "alias": {
+          "type": "string",
+          "title": "原料别名"
+        },
+        "des": {
+          "type": "string",
+          "title": "原料描述"
+        },
+        "availableModels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Model"
+          },
+          "title": "可用于此材料的模型，可能为空"
+        }
+      }
+    },
+    "v1Model": {
+      "type": "object",
+      "properties": {
+        "ID": {
+          "type": "string",
+          "format": "int64",
+          "title": "id"
+        },
+        "name": {
+          "type": "string",
+          "title": "模型名称"
+        },
+        "version": {
+          "type": "string",
+          "format": "int64",
+          "title": "模型版本"
+        },
+        "state": {
+          "type": "string",
+          "title": "模型状态"
+        },
+        "des": {
+          "type": "string",
+          "title": "模型描述(text)"
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object"
+          },
+          "title": "metadata"
+        }
+      }
+    },
+    "v1PredictResponse": {
+      "type": "object",
+      "properties": {
+        "material": {
+          "$ref": "#/definitions/v1Material",
+          "title": "预测结果类别"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,119 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "ca/v1/ca.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "CAService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {},
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1CertUsage": {
+      "type": "string",
+      "enum": [
+        "sign",
+        "tls",
+        "tls_enc"
+      ],
+      "default": "sign"
+    },
+    "v1GenCertResponse": {
+      "type": "object",
+      "properties": {
+        "cert": {
+          "type": "string",
+          "title": "证书内容"
+        },
+        "privateKey": {
+          "type": "string",
+          "title": "密钥内容"
+        },
+        "username": {
+          "type": "string",
+          "title": "用户名"
+        },
+        "tlsCert": {
+          "type": "string",
+          "title": "tls证书"
+        },
+        "tlsKey": {
+          "type": "string",
+          "title": "tls密钥"
+        }
+      }
+    },
+    "v1GetCertResponse": {
+      "type": "object",
+      "properties": {
+        "cert": {
+          "type": "string",
+          "title": "证书内容"
+        },
+        "privateKey": {
+          "type": "string",
+          "title": "密钥内容"
+        },
+        "username": {
+          "type": "string",
+          "title": "用户名"
+        },
+        "tlsCert": {
+          "type": "string",
+          "title": "tls证书"
+        },
+        "tlsKey": {
+          "type": "string",
+          "title": "tls密钥"
+        }
+      }
+    },
+    "v1UserType": {
+      "type": "string",
+      "enum": [
+        "root",
+        "ca",
+        "admin",
+        "client",
+        "consensus",
+        "common"
+      ],
+      "default": "root"
+    }
+  }
+}

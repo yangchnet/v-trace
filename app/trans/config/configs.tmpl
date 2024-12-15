@@ -1,0 +1,59 @@
+grpc:
+  network: tcp
+  address: 0.0.0.0:10106
+  timeout: 1s
+data:
+  database:
+    driver: mysql
+    dsn: root:$DB_PASSWORD@tcp(vtrace_mysql:13306)/trans?parseTime=true&charset=utf8mb4&loc=Local
+  redis:
+    host: vtrace_redis
+    port: 16379
+    password:
+    db: 0
+  pubsub:
+    host: vtrace_redis
+    port: 16379
+    ch_name: vtrace_task
+  mq:
+    host: vtrace_redis
+    port: 16379
+log:
+  level: 0 # 0: debug, 1: info, 2: warn, 3: error, 4: panic, 5, fatal
+  formatter: text # text/json
+  disable_caller: false # log中不记录文件名及行号
+  disable_color: false # 无颜色输出log
+  enable_abs_path: true # 输出文件名的完整的路径
+  enable_func: false # 输出打印log的函数名
+  ignore_basic_fields: false # 日志中不记录时间、文件等信息
+chainmaker:
+  nodes:
+    - addr: 127.0.0.1:12301
+      conn_cnt: 10
+      use_tls: true
+      ca_paths:
+        - build/chainmaker/config/org1/certs/ca/org1
+      tls_hostname: chainmaker.org
+  client:
+    chain_client_org_id: org1
+    chain_id: chain1
+    auth_type: permissionedwithcert
+    user_key_file_path: build/chainmaker/config/org1/certs/user/admin1/admin1.sign.key
+    user_crt_file_path: build/chainmaker/config/org1/certs/user/admin1/admin1.sign.crt
+  contract:
+    name: vtrace
+    version: 1.0.0
+    abi_path: build/chainmaker/contract/VTrace.abi
+    bin_path: build/chainmaker/contract/VTrace.bin
+  endorsers:
+    - user_key: build/chainmaker/config/org1/certs/user/admin1/admin1.sign.key
+      user_crt: build/chainmaker/config/org1/certs/user/admin1/admin1.sign.crt
+    - user_key: build/chainmaker/config/org1/certs/user/admin2/admin2.sign.key
+      user_crt: build/chainmaker/config/org1/certs/user/admin2/admin2.sign.crt
+    - user_key: build/chainmaker/config/org1/certs/user/admin3/admin3.sign.key
+      user_crt: build/chainmaker/config/org1/certs/user/admin3/admin3.sign.crt
+  with_sync_result: true
+etcd:
+  addresses:
+    - registry-etcd:2379
+  namespace: v-trace-dev

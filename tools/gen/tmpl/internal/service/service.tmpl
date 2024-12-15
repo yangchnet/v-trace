@@ -1,0 +1,30 @@
+package service
+
+import (
+	v1 "gitee.com/qciip-icp/v-trace/api/{{ .ServiceName }}/v1"
+	"github.com/google/wire"
+	"context"
+)
+
+var ProviderSet = wire.NewSet(New{{ .TitleServiceName }}Service)
+
+type {{ .TitleServiceName }}Service struct {
+	v1.Unimplemented{{ .TitleServiceName }}ServiceServer
+
+	cas {{ .TitleServiceName }}CaseInterface
+}
+
+func (s *{{ .TitleServiceName }}Service) mustEmbedUnimplemented{{ .TitleServiceName }}ServiceServer() {
+	panic("not implemented") // TODO: Implement
+}
+
+
+func New{{ .TitleServiceName }}Service(ctx context.Context, cas {{ .TitleServiceName }}CaseInterface) *{{ .TitleServiceName }}Service {
+	return &{{ .TitleServiceName }}Service{
+		cas: cas,
+	}
+}
+
+func (s *{{ .TitleServiceName }}Service) GetDomain() string {
+	return "{{ .TitleServiceName }}Service"
+}

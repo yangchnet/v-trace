@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package ca.v1;
+
+option go_package = "gitee.com/qciip-icp/v-trace/api/ca/v1;v1";
+
+import "error/error.proto";
+
+enum Error {
+  // 默认500
+  option (errors.default_code) = 500;
+
+  // 证书不存在
+  CERT_NOT_FOUND = 0 [ (errors.code) = 404 ];
+
+  // 参数错误
+  INVALID_PARAMS = 1 [ (errors.code) = 400 ];
+
+  // 证书生成失败
+  GEN_CERT_ERR = 2 [ (errors.code) = 500 ];
+}

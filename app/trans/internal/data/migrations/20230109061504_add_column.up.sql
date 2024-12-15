@@ -1,0 +1,1 @@
+ALTER TABLE `trans_record` ADD `tx_params_hash` varchar(100) NOT NULL UNIQUE ;

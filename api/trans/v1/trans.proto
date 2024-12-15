@@ -1,0 +1,220 @@
+syntax = "proto3";
+
+package trans.v1;
+
+option go_package = "gitee.com/qciip-icp/v-trace/api/trans/v1;v1";
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "trans/v1/model.proto";
+
+service TransService {
+  rpc Name(NameRequest) returns (NameResponse) {};
+  rpc Symbol(SymbolRequest) returns (SymbolResponse) {};
+  rpc Mint(MintRequest) returns (MintResponse) {};
+  rpc Burn(BurnRequest) returns (BurnResponse) {};
+  rpc Transfer(TransferRequest) returns (TransferResponse) {};
+  rpc Approve(ApproveRequest) returns (ApproveResponse) {};
+  rpc SetApproveForAll(SetApproveForAllRequest)
+      returns (SetApproveForAllResponse) {};
+  rpc GrantRole(GrantRoleRequest) returns (GrantRoleResponse) {};
+  rpc GetTrans(GetTransRequest) returns (GetTransResponse) {};
+  rpc UpdateTrans(UpdateTransRequest) returns (UpdateTransResponse) {};
+  rpc AddProcess(AddProcessRequest) returns (AddProcessResponse) {};
+  rpc ListTransByObj(ListTransByObjRequest) returns (ListTransByObjResponse) {};
+  rpc BatchMint(BatchMintRequest) returns (BatchMintResponse) {};
+  rpc BatchBurn(BatchBurnRequest) returns (BatchBurnResponse) {};
+  rpc BatchProcess(BatchProcessRequest) returns (BatchProcessResponse) {};
+  rpc BatchTransform(BatchTransformRequest) returns (BatchTransformResponse) {};
+}
+
+message BatchMintRequest {
+  trans.v1.Identity caller = 1;
+  trans.v1.Identity to = 2;
+  repeated int64 token_ids = 3;
+  repeated string transIds = 4;
+  string digest = 5;
+}
+
+message BatchMintResponse { OperationResult result = 1; }
+
+message BatchBurnRequest {
+  trans.v1.Identity caller = 1;
+  repeated int64 token_ids = 3;
+}
+
+message BatchBurnResponse { OperationResult result = 1; }
+
+message BatchProcessRequest {
+  trans.v1.Identity caller = 1;
+  repeated int64 token_ids = 3;
+  repeated string transIds = 4;
+  string digest = 5;
+}
+message BatchProcessResponse { OperationResult result = 1; }
+
+message BatchTransformRequest {
+  trans.v1.Identity caller = 1;
+  trans.v1.Identity from = 2;
+  trans.v1.Identity to = 3;
+  repeated int64 token_ids = 4;
+  repeated string transIds = 5;
+  string digest = 6;
+}
+message BatchTransformResponse { OperationResult result = 1; }
+
+message NameRequest {
+  // 操作者身份
+  trans.v1.Identity caller = 1;
+  // transId
+  string trans_id = 2;
+}
+
+message NameResponse {
+  // 操作结果
+  OperationResult result = 1;
+}
+
+message SymbolRequest {
+  // 身份标识
+  trans.v1.Identity caller = 1;
+  // transId
+  string trans_id = 2;
+}
+
+message SymbolResponse {
+  // 操作结果
+  OperationResult result = 1;
+}
+
+message MintRequest {
+  // 身份标识
+  trans.v1.Identity caller = 1;
+  // to
+  trans.v1.Identity to = 2;
+  // tokenId, 需保证唯一性
+  int64 token_id = 3;
+  // transId
+  string trans_id = 4;
+  // digest
+  string digest = 5;
+}
+
+message MintResponse {
+  // 操作结果
+  OperationResult result = 1;
+}
+
+message BurnRequest {
+  // 身份标识
+  trans.v1.Identity caller = 1;
+  // 要销毁的tokenId
+  int64 token_id = 2;
+  // transId
+  string trans_id = 3;
+  // callback url which is a golang url.URL type
+  google.protobuf.StringValue callback_url = 5;
+}
+
+message BurnResponse {
+  // 操作结果
+  OperationResult result = 1;
+}
+
+message TransferRequest {
+  // 操作者
+  trans.v1.Identity caller = 1;
+  // 转账者
+  trans.v1.Identity from = 2;
+  // 接收转账者
+  trans.v1.Identity to = 3;
+  // tokenId
+  int64 token_id = 4;
+  // transId
+  string trans_id = 5;
+  // digest
+  string digest = 6;
+}
+
+message TransferResponse {
+  // 操作结果
+  OperationResult result = 1;
+}
+
+message ApproveRequest {
+  // 操作者
+  trans.v1.Identity caller = 1;
+  // to
+  trans.v1.Identity to = 2;
+  // tokenId
+  int64 token_id = 3;
+  // callback url which is a golang url.URL type
+  google.protobuf.StringValue callback_url = 4;
+}
+
+message ApproveResponse { OperationResult result = 1; }
+
+message SetApproveForAllRequest {
+  // 授权人
+  trans.v1.Identity caller = 1;
+  // 被授权人operator
+  trans.v1.Identity operator = 2;
+  // 是否授权
+  bool approved = 3;
+  // transId
+  string trans_id = 5;
+  // callback url which is a golang url.URL type
+  google.protobuf.StringValue callback_url = 4;
+}
+
+message SetApproveForAllResponse {
+  // 操作结果
+  OperationResult result = 1;
+}
+
+message GrantRoleRequest {
+  // 授予角色者
+  trans.v1.Identity granter = 1;
+  // 被授予角色者
+  trans.v1.Identity account = 2;
+  // transId
+  string trans_id = 3;
+  // callback url which is a golang url.URL type
+  google.protobuf.StringValue callback_url = 5;
+}
+
+message GrantRoleResponse {
+  // 操作结果
+  OperationResult result = 1;
+}
+
+message GetTransRequest { string trans_id = 1; }
+
+message GetTransResponse { trans.v1.TransRecord trans = 1; }
+
+message UpdateTransRequest {
+  string trans_id = 1;
+  string tx_hash = 2;
+  bool success = 3;
+}
+
+message UpdateTransResponse { OperationResult result = 1; }
+
+message AddProcessRequest {
+  trans.v1.Identity caller = 1;
+  int64 tokenId = 2;
+  string digest = 3;
+  string trans_id = 4;
+}
+
+message AddProcessResponse { OperationResult result = 1; }
+
+message ListTransByObjRequest {}
+
+message ListTransByObjResponse {}
+
+enum OperationResult {
+  SUCCESS = 0;
+  FAIL = 1;
+}

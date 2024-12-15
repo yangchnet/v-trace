@@ -1,0 +1,31 @@
+package main
+
+import (
+	"context"
+
+	"gitee.com/qciip-icp/v-trace/app/{{ .ServiceName }}/internal/conf"
+	"gitee.com/qciip-icp/v-trace/pkg/app"
+	"gitee.com/qciip-icp/v-trace/pkg/grpc"
+	"gitee.com/qciip-icp/v-trace/pkg/logger"
+)
+
+func main() {
+	ctx := context.Background()
+
+	c := conf.LoadConfig("app/{{ .ServiceName }}/config")
+
+	logger.SetLogger(&c.Log)
+
+	app, err := InitApp(ctx, c)
+	if err != nil {
+		panic(err)
+	}
+
+	if err := app.Run(); err != nil {
+		panic(err)
+	}
+}
+
+func newApp(grpcServer *grpc.Server) *app.App {
+	return app.New(grpcServer)
+}

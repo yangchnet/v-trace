@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package algo.v1;
+
+option go_package = "gitee.com/qciip-icp/v-trace/api/algo/v1;v1";
+
+import "error/error.proto";
+
+enum Error {
+  // 默认500
+  option (errors.default_code) = 500;
+
+  // 模型不存在
+  MODEL_NOT_FOUND = 0 [ (errors.code) = 404 ];
+
+  // 调用模型失败
+  MODEL_PREDICT_FAILED = 1 [ (errors.code) = 500 ];
+
+  // 分类结果无法识别
+  PREDICT_RESULT_UNAVAILABLE = 2 [ (errors.code) = 404 ];
+
+  // 原料不存在
+  MATERIAL_NOT_FOUND = 3 [ (errors.code) = 404 ];
+}

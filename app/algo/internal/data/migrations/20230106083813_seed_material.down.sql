@@ -1,0 +1,3 @@
+TRUNCATE TABLE `model`;
+TRUNCATE TABLE `material`;
+TRUNCATE TABLE `relation`;

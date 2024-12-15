@@ -1,0 +1,364 @@
+syntax = "proto3";
+
+package vtrace.v1;
+
+option go_package = "gitee.com/qciip-icp/v-trace/api/vtrace/v1;v1";
+
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "vtrace/v1/message.proto";
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  security_definitions : {
+    security : {
+      key : "bearer"
+      value : {
+        type : TYPE_API_KEY
+        in : IN_HEADER
+        name : "Authorization"
+        description : "Authentication token, prefixed by Bearer: Bearer <token>"
+      }
+    }
+  }
+  security : {security_requirement : {key : "bearer"}}
+};
+
+service VTraceInterface {
+  // Register
+  rpc Register(RegisterRequest) returns (RegisterResponse) {
+    option (google.api.http) = {
+      post : "/api/v1/register"
+      body : "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary : "注册"
+      description : "用户使用手机号注册, TODO: 手机号验证"
+      security : {}
+    };
+  }
+
+  // Token
+  rpc Token(TokenRequest) returns (TokenResponse) {
+    option (google.api.http) = {
+      post : "/api/v1/token"
+      body : "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary : "Token"
+      description : "获取登录令牌"
+      security : {}
+    };
+  };
+
+  // RefreshToken 更新令牌
+  rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse) {
+    option (google.api.http) = {
+      post : "/api/v1/token:refresh"
+      body : "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary : "RefreshToken"
+      description : "更新登录令牌"
+    };
+  };
+
+  // Profile 获取用户信息
+  rpc Profile(ProfileRequest) returns (ProfileResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary : "获取个人信息"
+      description : "用户获取个人信息"
+    };
+    option (google.api.http) = {
+      post : "/api/v1/user:get"
+      body : "*"
+    };
+  }
+
+  // DeleteUser 删除用户
+  rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary : "删除用户"
+      description : "删除用户"
+    };
+    option (google.api.http) = {
+      post : "/api/v1/user:delete"
+      body : "*"
+    };
+  }
+
+  // IdentityAuth 实名认证
+  rpc IdentityAuth(IdentityAuthRequest) returns (IdentityAuthResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary : "实名认证"
+      description : "使用真实姓名，身份证号进行实名认证"
+    };
+    option (google.api.http) = {
+      post : "/api/v1/user:identity"
+      body : "*"
+    };
+  }
+
+  // 企业认证
+  rpc OrgAuth(OrgAuthRequest) returns (OrgAuthResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary : "企业认证"
+      description : "使用法人姓名、统一社会信用代码、企业全名，法人电话号码进行"
+    };
+    option (google.api.http) = {
+      post : "/api/v1/org:identity"
+      body : "*"
+    };
+  }
+
+  // 企业增加成员
+  rpc Member(MemberRequest) returns (MemberResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary : "企业增加成员"
+      description : "企业增加成员"
+    };
+    option (google.api.http) = {
+      post : "/api/v1/org:member"
+      body : "*"
+    };
+  }
+
+  // 创建商品种类
+  rpc CreateGoodsClass(CreateGoodsClassRequest)
+      returns (CreateGoodsClassResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary : "创建商品种类"
+    };
+    option (google.api.http) = {
+      post : "/api/v1/goods/class:create"
+      body : "*"
+    };
+  };
+
+  // 创建商品批次
+  rpc CreateGoodsSerial(CreateGoodsSerialRequest)
+      returns (CreateGoodsSerialResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary : "创建商品批次"
+    };
+    option (google.api.http) = {
+      post : "/api/v1/goods/serial:create"
+      body : "*"
+    };
+  };
+
+  // 批量创建商品
+  rpc BatchCreateGoods(BatchCreateGoodsRequest)
+      returns (BatchCreateGoodsResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary : "批量创建商品"
+    };
+    option (google.api.http) = {
+      post : "/api/v1/goods:batch_create"
+      body : "*"
+    };
+  };
+
+  // ListClass 列出产品类型
+  rpc ListClass(ListClassRequest) returns (ListClassResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary : "列出产品类型"
+    };
+    option (google.api.http) = {
+      post : "/api/v1/goods/class:list"
+      body : "*"
+    };
+  };
+
+  // ListGoodsSerial 列出产品批次
+  rpc ListGoodsSerial(ListGoodsSerialRequest)
+      returns (ListGoodsSerialResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary : "列出产品批次"
+    };
+    option (google.api.http) = {
+      post : "/api/v1/goods/serial:list"
+      body : "*"
+    };
+  };
+
+  // ListGoods 列出商品
+  rpc ListGoods(ListGoodsRequest) returns (ListGoodsResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary : "列出商品"
+    };
+    option (google.api.http) = {
+      post : "/api/v1/goods:list"
+      body : "*"
+    };
+  };
+
+  // 更新商品种类
+  rpc UpdateClass(UpdateClassRequest) returns (UpdateClassResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary : "更新商品种类"
+    };
+    option (google.api.http) = {
+      post : "/api/v1/goods/class:update"
+      body : "*"
+    };
+  };
+
+  // 更新产品批次
+  rpc UpdateGoodsSerial(UpdateGoodsSerialRequest)
+      returns (UpdateGoodsSerialResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary : "更新产品批次"
+    };
+    option (google.api.http) = {
+      post : "/api/v1/goods/serial:update"
+      body : "*"
+    };
+  };
+
+  // 更新商品
+  rpc UpdateGoods(UpdateGoodsRequest) returns (UpdateGoodsResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary : "更新商品"
+    };
+    option (google.api.http) = {
+      post : "/api/v1/goods:update"
+      body : "*"
+    };
+  };
+
+  // 获取原材料列表
+  rpc ListMaterial(ListMaterialRequest) returns (ListMaterialResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary : "获取原材料列表"
+    };
+    option (google.api.http) = {
+      post : "/api/v1/material:list"
+      body : "*"
+    };
+  };
+
+  // 商品流转
+  rpc CreateCirc(CreateCircRequest) returns (CreateCircResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary : "商品流转"
+    };
+    option (google.api.http) = {
+      post : "/api/v1/circ:create"
+      body : "*"
+    };
+  };
+
+  // 产品批量流传
+  rpc BatchCirc(BatchCircRequest) returns (BatchCircResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary : "商品批量流转"
+    };
+    option (google.api.http) = {
+      post : "/api/v1/circ:batch"
+      body : "*"
+    };
+  };
+
+  // 获取商品流转历史
+  rpc GetCirc(GetCircRequest) returns (GetCircResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary : "获取商品流转历史"
+    };
+    option (google.api.http) = {
+      post : "/api/v1/circ:get"
+      body : "*"
+    };
+  }
+
+  // ListModels 列出所有的算法模型
+  rpc ListModels(ListModelsRequest) returns (ListModelsResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary : "列出所有的算法模型"
+    };
+    option (google.api.http) = {
+      post : "/api/v1/algo/model:list"
+      body : "*"
+    };
+  }
+
+  // Predict 使用算法模型进行预测
+  rpc Predict(PredictRequest) returns (PredictResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary : "使用算法模型进行预测"
+    };
+    option (google.api.http) = {
+      post : "/api/v1/algo:predict"
+      body : "*"
+    };
+  }
+
+  // Upload 上传文件
+  rpc Upload(stream UploadRequest) returns (UploadResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary : "上传文件"
+    };
+    option (google.api.http) = {
+      post : "/api/v1/file:upload"
+      body : "*"
+    };
+  }
+
+  // OrgRemoveMember 企业删除成员
+  rpc OrgRemoveMember(OrgRemoveMemberRequest)
+      returns (OrgRemoveMemberResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary : "企业删除成员"
+    };
+    option (google.api.http) = {
+      post : "/api/v1/org/member:delete"
+      body : "*"
+    };
+  }
+
+  // ListOrgMember 企业查询成员列表
+  rpc ListOrgMember(ListOrgMemberRequest) returns (ListOrgMemberResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary : "企业查询成员列表"
+    };
+    option (google.api.http) = {
+      post : "/api/v1/org/member:list"
+      body : "*"
+    };
+  };
+
+  // UpdateOrg 企业信息更新
+  rpc UpdateOrg(UpdateOrgRequest) returns (UpdateOrgResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary : "企业信息更新"
+    };
+    option (google.api.http) = {
+      post : "/api/v1/org:update"
+      body : "*"
+    };
+  };
+
+  // UpdateUser 用户信息更新
+  rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary : "用户信息更新"
+    };
+    option (google.api.http) = {
+      post : "/api/v1/user:update"
+      body : "*"
+    };
+  };
+
+  // GetOrgUser 查询用户所属企业
+  rpc GetOrgUser(GetOrgOfUserRequest) returns (GetOrgOfUserResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary : "查询用户所属企业"
+    };
+    option (google.api.http) = {
+      post : "/api/v1/org/user:get"
+      body : "*"
+    };
+  };
+}

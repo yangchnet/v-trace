@@ -1,0 +1,27 @@
+version: v1
+
+#buf 配置文件
+plugins:
+  - name: go
+    out: .
+    opt:
+      - paths=source_relative
+  - name: go-grpc
+    out: .
+    opt:
+      - paths=source_relative
+  - name: grpc-gateway
+    out: .
+    opt:
+      - paths=source_relative
+      - generate_unbound_methods=true
+  - name: openapiv2
+    out: ../pkg/third-party/OpenAPI/
+  - name: doc
+    out: ../docs
+    opt:
+      - markdown,doc.md,source_relative
+  - name: go-errors
+    out: .
+    opt:
+      - paths=source_relative

@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package algo.v1;
+
+option go_package = "gitee.com/qciip-icp/v-trace/api/algo/v1;v1";
+
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/struct.proto";
+import "algo/v1/model.proto";
+
+service AlgoService {
+  // 获取算法模型支持的材料
+  rpc ListMaterials(ListMaterialsRequest) returns (ListMaterialsResponse) {};
+  // 列出所有算法模型
+  rpc ListModels(ListModelsRequest) returns (ListModelsResponse) {};
+  // 进行预测
+  rpc Predict(PredictRequest) returns (PredictResponse) {};
+}
+
+message ListMaterialsRequest {}
+
+message ListMaterialsResponse {
+  // 原料列表
+  repeated algo.v1.Material materials = 1;
+}
+
+message ListModelsRequest {}
+
+message ListModelsResponse {
+  // 模型列表
+  repeated Model models = 1;
+}
+
+message PredictRequest {
+  // 模型名
+  string model_name = 1;
+  // 用于预测的数据
+  bytes data = 2;
+}
+
+message PredictResponse {
+  // 预测结果类别
+  algo.v1.Material material = 1;
+}

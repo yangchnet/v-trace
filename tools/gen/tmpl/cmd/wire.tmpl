@@ -1,0 +1,34 @@
+//go:build wireinject
+// +build wireinject
+
+// The build tag makes sure the stub is not built in the final build.
+
+package main
+
+import (
+	"context"
+
+	v1 "gitee.com/qciip-icp/v-trace/api/{{ .ServiceName }}/v1"
+	"gitee.com/qciip-icp/v-trace/app/{{ .ServiceName }}/internal/biz"
+	"gitee.com/qciip-icp/v-trace/app/{{ .ServiceName }}/internal/conf"
+	"gitee.com/qciip-icp/v-trace/app/{{ .ServiceName }}/internal/data"
+	"gitee.com/qciip-icp/v-trace/app/{{ .ServiceName }}/internal/server"
+	"gitee.com/qciip-icp/v-trace/app/{{ .ServiceName }}/internal/service"
+	"gitee.com/qciip-icp/v-trace/pkg/app"
+	"gitee.com/qciip-icp/v-trace/pkg/cache"
+	"github.com/google/wire"
+)
+
+func InitApp(ctx context.Context, c *conf.Bootstrap) (*app.App, error) {
+	panic(wire.Build(
+		wire.Bind(new(biz.{{ .TitleServiceName }}Repo), new(*data.Data)),
+		wire.Bind(new(service.{{ .TitleServiceName }}CaseInterface), new(*biz.{{ .TitleServiceName }}Case)),
+		wire.Bind(new(cache.Cache), new(*cache.RedisStore)),
+		wire.Bind(new(v1.{{ .TitleServiceName }}ServiceServer), new(*service.{{ .TitleServiceName }}Service)),
+		server.ProviderSet,
+		service.ProviderSet,
+		biz.ProviderSet,
+		data.ProviderSet,
+		newApp,
+	))
+}

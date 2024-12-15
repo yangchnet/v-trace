@@ -1,0 +1,36 @@
+g, examiner, normal
+g, admin, examiner
+g, transporter, normal
+g, producer, transporter
+g, boss, producer
+g, admin, boss
+p, normal, /api/v1/user, get
+p, admin, /api/v1/user, delete
+p, normal, /api/v1/user, identity
+p, normal, /api/v1/token, refresh
+p, transporter, /api/v1/org, identity
+p, boss, /api/v1/org, member
+p, boss, /api/v1/org, update
+p, producer, /api/v1/goods/class, create
+p, producer, /api/v1/goods/serial, create
+p, producer, /api/v1/goods, batch_create
+p, producer, /api/v1/goods/class, list
+p, producer, /api/v1/goods/serial, list
+p, producer, /api/v1/goods, list
+p, producer, /api/v1/goods/class, update
+p, producer, /api/v1/goods/serial, update
+p, producer, /api/v1/goods, update
+p, producer, /api/v1/material, list
+p, transporter, /api/v1/circ, create
+p, normal, /api/v1/circ, get
+p, examiner, /api/v1/algo/model, list
+p, examiner, /api/v1/algo, predict
+p, normal, /api/v1/file, upload
+p, boss, /api/v1/org/member, delete
+p, boss, /api/v1/org/member, list
+p, boss, /api/v1/org/member, update
+p, normal, /api/v1/user, update
+p, normal, /api/v1/org/user, get
+p, normal, /api/v1/contract/name, call
+p, boss, /api/v1/org/member, list
+p, transporter, /api/v1/circ, batch

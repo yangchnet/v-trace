@@ -1,0 +1,2049 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "vtrace/v1/app.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "VTraceInterface"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/v1/algo/model:list": {
+      "post": {
+        "summary": "列出所有的算法模型",
+        "operationId": "VTraceInterface_ListModels",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListModelsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ListModelsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "VTraceInterface"
+        ]
+      }
+    },
+    "/api/v1/algo:predict": {
+      "post": {
+        "summary": "使用算法模型进行预测",
+        "operationId": "VTraceInterface_Predict",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1PredictResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1PredictRequest"
+            }
+          }
+        ],
+        "tags": [
+          "VTraceInterface"
+        ]
+      }
+    },
+    "/api/v1/circ:batch": {
+      "post": {
+        "summary": "商品批量流转",
+        "operationId": "VTraceInterface_BatchCirc",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1BatchCircResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1BatchCircRequest"
+            }
+          }
+        ],
+        "tags": [
+          "VTraceInterface"
+        ]
+      }
+    },
+    "/api/v1/circ:create": {
+      "post": {
+        "summary": "商品流转",
+        "operationId": "VTraceInterface_CreateCirc",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1CreateCircResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1CreateCircRequest"
+            }
+          }
+        ],
+        "tags": [
+          "VTraceInterface"
+        ]
+      }
+    },
+    "/api/v1/circ:get": {
+      "post": {
+        "summary": "获取商品流转历史",
+        "operationId": "VTraceInterface_GetCirc",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetCircResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1GetCircRequest"
+            }
+          }
+        ],
+        "tags": [
+          "VTraceInterface"
+        ]
+      }
+    },
+    "/api/v1/file:upload": {
+      "post": {
+        "summary": "上传文件",
+        "operationId": "VTraceInterface_Upload",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UploadResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " (streaming inputs)",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1UploadRequest"
+            }
+          }
+        ],
+        "tags": [
+          "VTraceInterface"
+        ]
+      }
+    },
+    "/api/v1/goods/class:create": {
+      "post": {
+        "summary": "创建商品种类",
+        "operationId": "VTraceInterface_CreateGoodsClass",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1CreateGoodsClassResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1CreateGoodsClassRequest"
+            }
+          }
+        ],
+        "tags": [
+          "VTraceInterface"
+        ]
+      }
+    },
+    "/api/v1/goods/class:list": {
+      "post": {
+        "summary": "列出产品类型",
+        "operationId": "VTraceInterface_ListClass",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListClassResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ListClassRequest"
+            }
+          }
+        ],
+        "tags": [
+          "VTraceInterface"
+        ]
+      }
+    },
+    "/api/v1/goods/class:update": {
+      "post": {
+        "summary": "更新商品种类",
+        "operationId": "VTraceInterface_UpdateClass",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UpdateClassResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1UpdateClassRequest"
+            }
+          }
+        ],
+        "tags": [
+          "VTraceInterface"
+        ]
+      }
+    },
+    "/api/v1/goods/serial:create": {
+      "post": {
+        "summary": "创建商品批次",
+        "operationId": "VTraceInterface_CreateGoodsSerial",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1CreateGoodsSerialResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1CreateGoodsSerialRequest"
+            }
+          }
+        ],
+        "tags": [
+          "VTraceInterface"
+        ]
+      }
+    },
+    "/api/v1/goods/serial:list": {
+      "post": {
+        "summary": "列出产品批次",
+        "operationId": "VTraceInterface_ListGoodsSerial",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListGoodsSerialResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ListGoodsSerialRequest"
+            }
+          }
+        ],
+        "tags": [
+          "VTraceInterface"
+        ]
+      }
+    },
+    "/api/v1/goods/serial:update": {
+      "post": {
+        "summary": "更新产品批次",
+        "operationId": "VTraceInterface_UpdateGoodsSerial",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UpdateGoodsSerialResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1UpdateGoodsSerialRequest"
+            }
+          }
+        ],
+        "tags": [
+          "VTraceInterface"
+        ]
+      }
+    },
+    "/api/v1/goods:batch_create": {
+      "post": {
+        "summary": "批量创建商品",
+        "operationId": "VTraceInterface_BatchCreateGoods",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1BatchCreateGoodsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1BatchCreateGoodsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "VTraceInterface"
+        ]
+      }
+    },
+    "/api/v1/goods:list": {
+      "post": {
+        "summary": "列出商品",
+        "operationId": "VTraceInterface_ListGoods",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListGoodsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ListGoodsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "VTraceInterface"
+        ]
+      }
+    },
+    "/api/v1/goods:update": {
+      "post": {
+        "summary": "更新商品",
+        "operationId": "VTraceInterface_UpdateGoods",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UpdateGoodsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1UpdateGoodsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "VTraceInterface"
+        ]
+      }
+    },
+    "/api/v1/material:list": {
+      "post": {
+        "summary": "获取原材料列表",
+        "operationId": "VTraceInterface_ListMaterial",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListMaterialResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ListMaterialRequest"
+            }
+          }
+        ],
+        "tags": [
+          "VTraceInterface"
+        ]
+      }
+    },
+    "/api/v1/org/member:delete": {
+      "post": {
+        "summary": "企业删除成员",
+        "operationId": "VTraceInterface_OrgRemoveMember",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1OrgRemoveMemberResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1OrgRemoveMemberRequest"
+            }
+          }
+        ],
+        "tags": [
+          "VTraceInterface"
+        ]
+      }
+    },
+    "/api/v1/org/member:list": {
+      "post": {
+        "summary": "企业查询成员列表",
+        "operationId": "VTraceInterface_ListOrgMember",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListOrgMemberResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ListOrgMemberRequest"
+            }
+          }
+        ],
+        "tags": [
+          "VTraceInterface"
+        ]
+      }
+    },
+    "/api/v1/org/user:get": {
+      "post": {
+        "summary": "查询用户所属企业",
+        "operationId": "VTraceInterface_GetOrgUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetOrgOfUserResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1GetOrgOfUserRequest"
+            }
+          }
+        ],
+        "tags": [
+          "VTraceInterface"
+        ]
+      }
+    },
+    "/api/v1/org:identity": {
+      "post": {
+        "summary": "企业认证",
+        "description": "使用法人姓名、统一社会信用代码、企业全名，法人电话号码进行",
+        "operationId": "VTraceInterface_OrgAuth",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1OrgAuthResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1OrgAuthRequest"
+            }
+          }
+        ],
+        "tags": [
+          "VTraceInterface"
+        ]
+      }
+    },
+    "/api/v1/org:member": {
+      "post": {
+        "summary": "企业增加成员",
+        "description": "企业增加成员",
+        "operationId": "VTraceInterface_Member",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1MemberResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1MemberRequest"
+            }
+          }
+        ],
+        "tags": [
+          "VTraceInterface"
+        ]
+      }
+    },
+    "/api/v1/org:update": {
+      "post": {
+        "summary": "企业信息更新",
+        "operationId": "VTraceInterface_UpdateOrg",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UpdateOrgResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1UpdateOrgRequest"
+            }
+          }
+        ],
+        "tags": [
+          "VTraceInterface"
+        ]
+      }
+    },
+    "/api/v1/register": {
+      "post": {
+        "summary": "注册",
+        "description": "用户使用手机号注册, TODO: 手机号验证",
+        "operationId": "VTraceInterface_Register",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1RegisterResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1RegisterRequest"
+            }
+          }
+        ],
+        "tags": [
+          "VTraceInterface"
+        ],
+        "security": []
+      }
+    },
+    "/api/v1/token": {
+      "post": {
+        "summary": "Token",
+        "description": "获取登录令牌",
+        "operationId": "VTraceInterface_Token",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1TokenResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1TokenRequest"
+            }
+          }
+        ],
+        "tags": [
+          "VTraceInterface"
+        ],
+        "security": []
+      }
+    },
+    "/api/v1/token:refresh": {
+      "post": {
+        "summary": "RefreshToken",
+        "description": "更新登录令牌",
+        "operationId": "VTraceInterface_RefreshToken",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1RefreshTokenResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1RefreshTokenRequest"
+            }
+          }
+        ],
+        "tags": [
+          "VTraceInterface"
+        ]
+      }
+    },
+    "/api/v1/user:delete": {
+      "post": {
+        "summary": "删除用户",
+        "description": "删除用户",
+        "operationId": "VTraceInterface_DeleteUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1DeleteUserResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1DeleteUserRequest"
+            }
+          }
+        ],
+        "tags": [
+          "VTraceInterface"
+        ]
+      }
+    },
+    "/api/v1/user:get": {
+      "post": {
+        "summary": "获取个人信息",
+        "description": "用户获取个人信息",
+        "operationId": "VTraceInterface_Profile",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ProfileResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ProfileRequest"
+            }
+          }
+        ],
+        "tags": [
+          "VTraceInterface"
+        ]
+      }
+    },
+    "/api/v1/user:identity": {
+      "post": {
+        "summary": "实名认证",
+        "description": "使用真实姓名，身份证号进行实名认证",
+        "operationId": "VTraceInterface_IdentityAuth",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1IdentityAuthResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1IdentityAuthRequest"
+            }
+          }
+        ],
+        "tags": [
+          "VTraceInterface"
+        ]
+      }
+    },
+    "/api/v1/user:update": {
+      "post": {
+        "summary": "用户信息更新",
+        "operationId": "VTraceInterface_UpdateUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UpdateUserResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1UpdateUserRequest"
+            }
+          }
+        ],
+        "tags": [
+          "VTraceInterface"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "UploadRequestmetadata": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "googlerpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "iamv1Status": {
+      "type": "string",
+      "enum": [
+        "enable",
+        "deleted"
+      ],
+      "default": "enable"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "protobufNullValue": {
+      "type": "string",
+      "enum": [
+        "NULL_VALUE"
+      ],
+      "default": "NULL_VALUE",
+      "description": "`NullValue` is a singleton enumeration to represent the null value for the\n`Value` type union.\n\n The JSON representation for `NullValue` is JSON `null`.\n\n - NULL_VALUE: Null value."
+    },
+    "v1BatchCircRequest": {
+      "type": "object",
+      "properties": {
+        "goodsIds": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "title": "商品编号列表"
+        },
+        "circType": {
+          "$ref": "#/definitions/v1CircType",
+          "title": "流转类型"
+        },
+        "operator": {
+          "type": "string",
+          "title": "流转参与者"
+        },
+        "from": {
+          "type": "string",
+          "title": "from, 当流转类型为\"Produce\"时为空"
+        },
+        "to": {
+          "type": "string",
+          "title": "to, 当流转类型为Transfer时不为空"
+        },
+        "formInfo": {
+          "type": "string",
+          "format": "byte",
+          "title": "表单json数据"
+        }
+      }
+    },
+    "v1BatchCircResponse": {
+      "type": "object",
+      "properties": {
+        "goodsId2transId": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "goodsId =\u003e transId"
+        }
+      }
+    },
+    "v1BatchCreateGoodsRequest": {
+      "type": "object",
+      "properties": {
+        "serialId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "产品批次id"
+        },
+        "sum": {
+          "type": "integer",
+          "format": "int32",
+          "title": "本批次产品数量"
+        }
+      },
+      "title": "批量创建产品"
+    },
+    "v1BatchCreateGoodsResponse": {
+      "type": "object",
+      "properties": {
+        "ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          },
+          "title": "产品编号列表"
+        },
+        "successes": {
+          "type": "integer",
+          "format": "int32",
+          "title": "成功的数量"
+        }
+      }
+    },
+    "v1CircRecord": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "id"
+        },
+        "objectId": {
+          "type": "string",
+          "format": "int64",
+          "title": "流转主体id（一般为商品id）"
+        },
+        "circType": {
+          "$ref": "#/definitions/v1CircType",
+          "title": "流转类型"
+        },
+        "Operator": {
+          "type": "string",
+          "title": "流转操作者"
+        },
+        "from": {
+          "type": "string",
+          "title": "from"
+        },
+        "to": {
+          "type": "string",
+          "title": "to"
+        },
+        "fromValue": {
+          "type": "string",
+          "title": "formValue"
+        },
+        "txHash": {
+          "type": "string",
+          "title": "txHash"
+        },
+        "transId": {
+          "type": "string",
+          "title": "transId"
+        },
+        "times": {
+          "type": "string",
+          "format": "int64",
+          "title": "times"
+        },
+        "status": {
+          "type": "string",
+          "title": "status"
+        }
+      }
+    },
+    "v1CircType": {
+      "type": "string",
+      "enum": [
+        "produce",
+        "process",
+        "transfer",
+        "exam"
+      ],
+      "default": "produce",
+      "title": "- produce: 生产\n - process: 一般流程\n - transfer: 转交\n - exam: 核验"
+    },
+    "v1Class": {
+      "type": "object",
+      "properties": {
+        "ID": {
+          "type": "string",
+          "format": "int64",
+          "title": "id"
+        },
+        "name": {
+          "type": "string",
+          "title": "产品类别名称"
+        },
+        "des": {
+          "type": "string",
+          "format": "byte",
+          "title": "产品类别描述(json)"
+        },
+        "state": {
+          "type": "string",
+          "title": "状态"
+        },
+        "creator": {
+          "type": "string",
+          "title": "创建者"
+        },
+        "orgId": {
+          "type": "string",
+          "format": "int64",
+          "title": "生产企业"
+        },
+        "tm": {
+          "type": "string",
+          "title": "商标"
+        },
+        "materialId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "原料"
+        }
+      }
+    },
+    "v1CreateCircRequest": {
+      "type": "object",
+      "properties": {
+        "goodsId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "商品id"
+        },
+        "circType": {
+          "$ref": "#/definitions/v1CircType",
+          "title": "流转类型"
+        },
+        "from": {
+          "type": "string",
+          "title": "实体来源用户\n流转类型为\"produce\"时，此字段为空\n流转类型为\"process\"、\"exam\"或\"transfer\"时，此字段为操作者本身用户名"
+        },
+        "to": {
+          "type": "string",
+          "title": "实体目标用户\n流转类型为\"produce\"、\"process\", \"exam\"时，此字段为操作者\n流转类型为\"transfer\"时，此字段为要转交的用户的用户名"
+        },
+        "formValue": {
+          "type": "string",
+          "format": "byte",
+          "title": "表单数据"
+        }
+      }
+    },
+    "v1CreateCircResponse": {
+      "type": "object",
+      "properties": {
+        "circId": {
+          "type": "string",
+          "format": "int64",
+          "title": "流转信息id"
+        },
+        "transId": {
+          "type": "string",
+          "title": "transId"
+        }
+      }
+    },
+    "v1CreateGoodsClassRequest": {
+      "type": "object",
+      "properties": {
+        "goodsName": {
+          "type": "string",
+          "title": "产品类型名称"
+        },
+        "goodsDes": {
+          "type": "string",
+          "format": "byte",
+          "title": "产品类型说明(json)"
+        },
+        "materialId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "产品类型配料id"
+        },
+        "tm": {
+          "type": "string",
+          "title": "商标编号(optional)"
+        }
+      }
+    },
+    "v1CreateGoodsClassResponse": {
+      "type": "object",
+      "properties": {
+        "classId": {
+          "type": "string",
+          "format": "int64",
+          "title": "产品类别号"
+        }
+      }
+    },
+    "v1CreateGoodsSerialRequest": {
+      "type": "object",
+      "properties": {
+        "productTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生产日期"
+        },
+        "classId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "产品种类号"
+        }
+      }
+    },
+    "v1CreateGoodsSerialResponse": {
+      "type": "object",
+      "properties": {
+        "serialId": {
+          "type": "string",
+          "format": "int64",
+          "title": "产品批次id"
+        }
+      }
+    },
+    "v1DeleteUserRequest": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        }
+      }
+    },
+    "v1DeleteUserResponse": {
+      "type": "object"
+    },
+    "v1GetCircRequest": {
+      "type": "object",
+      "properties": {
+        "goodsId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "商品id"
+        }
+      }
+    },
+    "v1GetCircResponse": {
+      "type": "object",
+      "properties": {
+        "goodsInfo": {
+          "$ref": "#/definitions/v1Goods",
+          "title": "商品信息"
+        },
+        "circRecords": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1CircRecord"
+          },
+          "title": "流转记录"
+        }
+      }
+    },
+    "v1GetOrgOfUserRequest": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "title": "唯一用户名"
+        }
+      },
+      "title": "GetOrgUser 查询用户所属企业"
+    },
+    "v1GetOrgOfUserResponse": {
+      "type": "object",
+      "properties": {
+        "org": {
+          "$ref": "#/definitions/v1Org"
+        }
+      }
+    },
+    "v1Goods": {
+      "type": "object",
+      "properties": {
+        "ID": {
+          "type": "string",
+          "format": "int64",
+          "title": "id"
+        },
+        "state": {
+          "type": "string",
+          "title": "状态"
+        },
+        "creator": {
+          "type": "string",
+          "title": "创建者"
+        },
+        "serial": {
+          "$ref": "#/definitions/v1Serial",
+          "title": "批次"
+        }
+      }
+    },
+    "v1IdentityAuthRequest": {
+      "type": "object",
+      "properties": {
+        "realname": {
+          "type": "string",
+          "title": "真实姓名"
+        },
+        "idcard": {
+          "type": "string",
+          "title": "身份证号"
+        },
+        "username": {
+          "type": "string",
+          "title": "唯一用户名"
+        }
+      }
+    },
+    "v1IdentityAuthResponse": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/v1User"
+        }
+      }
+    },
+    "v1ListClassRequest": {
+      "type": "object",
+      "properties": {
+        "offset": {
+          "type": "integer",
+          "format": "int32",
+          "title": "页偏移"
+        },
+        "limit": {
+          "type": "integer",
+          "format": "int32",
+          "title": "页容量"
+        }
+      },
+      "title": "列出产品类型"
+    },
+    "v1ListClassResponse": {
+      "type": "object",
+      "properties": {
+        "goodsClasses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Class"
+          },
+          "title": "产品类型列表"
+        }
+      }
+    },
+    "v1ListGoodsRequest": {
+      "type": "object",
+      "properties": {
+        "offset": {
+          "type": "integer",
+          "format": "int32",
+          "title": "页偏移"
+        },
+        "limit": {
+          "type": "integer",
+          "format": "int32",
+          "title": "页容量"
+        }
+      },
+      "title": "列出产品"
+    },
+    "v1ListGoodsResponse": {
+      "type": "object",
+      "properties": {
+        "goods": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Goods"
+          }
+        }
+      }
+    },
+    "v1ListGoodsSerialRequest": {
+      "type": "object",
+      "properties": {
+        "offset": {
+          "type": "integer",
+          "format": "int32",
+          "title": "页偏移"
+        },
+        "limit": {
+          "type": "integer",
+          "format": "int32",
+          "title": "页容量"
+        }
+      },
+      "title": "列出产品批次"
+    },
+    "v1ListGoodsSerialResponse": {
+      "type": "object",
+      "properties": {
+        "serial": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Serial"
+          },
+          "title": "产品编号列表"
+        }
+      }
+    },
+    "v1ListMaterialRequest": {
+      "type": "object"
+    },
+    "v1ListMaterialResponse": {
+      "type": "object",
+      "properties": {
+        "materials": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Material"
+          },
+          "title": "原料列表"
+        }
+      }
+    },
+    "v1ListModelsRequest": {
+      "type": "object"
+    },
+    "v1ListModelsResponse": {
+      "type": "object",
+      "properties": {
+        "models": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Model"
+          },
+          "title": "算法模型列表"
+        }
+      }
+    },
+    "v1ListOrgMemberRequest": {
+      "type": "object",
+      "properties": {
+        "orgId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "offset": {
+          "type": "integer",
+          "format": "int32",
+          "title": "页偏移"
+        },
+        "limit": {
+          "type": "integer",
+          "format": "int32",
+          "title": "页容量"
+        }
+      },
+      "title": "企业查询成员列表"
+    },
+    "v1ListOrgMemberResponse": {
+      "type": "object",
+      "properties": {
+        "users": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1User"
+          }
+        }
+      }
+    },
+    "v1Material": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "原料编号"
+        },
+        "name": {
+          "type": "string",
+          "title": "原料正式名称"
+        },
+        "alias": {
+          "type": "string",
+          "title": "原料别名"
+        },
+        "des": {
+          "type": "string",
+          "title": "原料描述"
+        },
+        "availableModels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Model"
+          },
+          "title": "可用于此材料的模型，可能为空"
+        }
+      }
+    },
+    "v1MemberRequest": {
+      "type": "object",
+      "properties": {
+        "orgId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "org id"
+        },
+        "username": {
+          "type": "string",
+          "title": "username"
+        }
+      }
+    },
+    "v1MemberResponse": {
+      "type": "object"
+    },
+    "v1Model": {
+      "type": "object",
+      "properties": {
+        "ID": {
+          "type": "string",
+          "format": "int64",
+          "title": "id"
+        },
+        "name": {
+          "type": "string",
+          "title": "模型名称"
+        },
+        "version": {
+          "type": "string",
+          "format": "int64",
+          "title": "模型版本"
+        },
+        "state": {
+          "type": "string",
+          "title": "模型状态"
+        },
+        "des": {
+          "type": "string",
+          "title": "模型描述(text)"
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object"
+          },
+          "title": "metadata"
+        }
+      }
+    },
+    "v1Org": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "id"
+        },
+        "orgName": {
+          "type": "string",
+          "title": "企业名称"
+        },
+        "orgCode": {
+          "type": "string",
+          "title": "企业社会信用代码"
+        },
+        "legalPersonName": {
+          "type": "string",
+          "title": "企业法人姓名"
+        },
+        "legalPersonPhone": {
+          "type": "string",
+          "title": "企业法人手机号"
+        },
+        "owner": {
+          "type": "string",
+          "title": "企业所有者或管理员"
+        },
+        "orgInfo": {
+          "type": "string",
+          "format": "byte",
+          "title": "企业信息(json)"
+        }
+      }
+    },
+    "v1OrgAuthRequest": {
+      "type": "object",
+      "properties": {
+        "legalName": {
+          "type": "string",
+          "title": "法人姓名"
+        },
+        "orgName": {
+          "type": "string",
+          "title": "企业全名"
+        },
+        "code": {
+          "type": "string",
+          "title": "社会信用代码"
+        },
+        "legalPhone": {
+          "type": "string",
+          "title": "法人手机号"
+        },
+        "orgInfo": {
+          "type": "string",
+          "format": "byte",
+          "title": "企业其他信息"
+        }
+      }
+    },
+    "v1OrgAuthResponse": {
+      "type": "object",
+      "properties": {
+        "org": {
+          "$ref": "#/definitions/v1Org"
+        }
+      }
+    },
+    "v1OrgRemoveMemberRequest": {
+      "type": "object",
+      "properties": {
+        "orgId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "org id"
+        },
+        "username": {
+          "type": "string",
+          "title": "用户名"
+        }
+      },
+      "title": "RemoveOrgMember 企业删除成员"
+    },
+    "v1OrgRemoveMemberResponse": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "type": "boolean"
+        }
+      }
+    },
+    "v1PredictRequest": {
+      "type": "object",
+      "properties": {
+        "modelName": {
+          "type": "string",
+          "title": "模型名"
+        },
+        "data": {
+          "type": "string",
+          "format": "byte",
+          "title": "用于预测的数据"
+        }
+      }
+    },
+    "v1PredictResponse": {
+      "type": "object",
+      "properties": {
+        "material": {
+          "$ref": "#/definitions/v1Material",
+          "title": "预测结果"
+        }
+      }
+    },
+    "v1ProfileRequest": {
+      "type": "object"
+    },
+    "v1ProfileResponse": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/v1User"
+        }
+      }
+    },
+    "v1RefreshTokenRequest": {
+      "type": "object"
+    },
+    "v1RefreshTokenResponse": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "title": "token"
+        }
+      }
+    },
+    "v1RegisterRequest": {
+      "type": "object",
+      "properties": {
+        "phone": {
+          "type": "string",
+          "title": "电话"
+        },
+        "nickname": {
+          "type": "string",
+          "title": "暱称(nickname)"
+        },
+        "passwd": {
+          "type": "string",
+          "title": "密码"
+        }
+      },
+      "title": "====================================================================\nRegister\nFIXME: 增加验证"
+    },
+    "v1RegisterResponse": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/v1User",
+          "title": "唯一用户名"
+        },
+        "token": {
+          "type": "string",
+          "title": "token"
+        }
+      }
+    },
+    "v1Serial": {
+      "type": "object",
+      "properties": {
+        "ID": {
+          "type": "string",
+          "format": "int64",
+          "title": "id"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生产日期"
+        },
+        "state": {
+          "type": "string",
+          "title": "状态"
+        },
+        "creator": {
+          "type": "string",
+          "title": "创建者"
+        },
+        "class": {
+          "$ref": "#/definitions/v1Class",
+          "title": "类别"
+        }
+      }
+    },
+    "v1TokenRequest": {
+      "type": "object",
+      "properties": {
+        "phone": {
+          "type": "string",
+          "title": "电话号码"
+        },
+        "password": {
+          "type": "string",
+          "title": "密码"
+        }
+      },
+      "title": "====================================================================\nToken"
+    },
+    "v1TokenResponse": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        }
+      }
+    },
+    "v1UpdateClassRequest": {
+      "type": "object",
+      "properties": {
+        "class": {
+          "$ref": "#/definitions/v1Class",
+          "title": "待更新信息"
+        }
+      },
+      "title": "更新产品类型信息"
+    },
+    "v1UpdateClassResponse": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "type": "boolean"
+        }
+      }
+    },
+    "v1UpdateGoodsRequest": {
+      "type": "object",
+      "properties": {
+        "goods": {
+          "$ref": "#/definitions/v1Goods",
+          "title": "待更新商品"
+        }
+      },
+      "title": "更新产品"
+    },
+    "v1UpdateGoodsResponse": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "type": "boolean"
+        }
+      }
+    },
+    "v1UpdateGoodsSerialRequest": {
+      "type": "object",
+      "properties": {
+        "serial": {
+          "$ref": "#/definitions/v1Serial",
+          "title": "待更新产品批次"
+        }
+      }
+    },
+    "v1UpdateGoodsSerialResponse": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "type": "boolean"
+        }
+      }
+    },
+    "v1UpdateOrgRequest": {
+      "type": "object",
+      "properties": {
+        "org": {
+          "$ref": "#/definitions/v1Org",
+          "title": "待更新企业"
+        }
+      },
+      "title": "UpdateOrg 企业信息更新"
+    },
+    "v1UpdateOrgResponse": {
+      "type": "object",
+      "properties": {
+        "org": {
+          "$ref": "#/definitions/v1Org"
+        }
+      }
+    },
+    "v1UpdateUserRequest": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/v1User"
+        }
+      },
+      "title": "UpdateUser 用户信息更新"
+    },
+    "v1UpdateUserResponse": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/v1User"
+        }
+      }
+    },
+    "v1UploadRequest": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string",
+          "format": "byte",
+          "title": "文件内容(base64)"
+        },
+        "mds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UploadRequestmetadata"
+          },
+          "title": "文件元信息(可选)"
+        }
+      }
+    },
+    "v1UploadResponse": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "title": "文件url"
+        }
+      }
+    },
+    "v1User": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "title": "唯一用户名"
+        },
+        "nickname": {
+          "type": "string",
+          "title": "用户暱称"
+        },
+        "role": {
+          "type": "string",
+          "title": "用户角色"
+        },
+        "phone": {
+          "type": "string",
+          "title": "手机"
+        },
+        "email": {
+          "type": "string",
+          "title": "邮箱"
+        },
+        "createAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "注册时间"
+        },
+        "realname": {
+          "type": "string",
+          "title": "实际姓名"
+        },
+        "idcard": {
+          "type": "string",
+          "title": "身份证号"
+        },
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "id"
+        },
+        "avatar": {
+          "type": "string",
+          "title": "头像"
+        },
+        "status": {
+          "$ref": "#/definitions/iamv1Status",
+          "title": "用户状态 （正常/true|已删除/false）"
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "bearer": {
+      "type": "apiKey",
+      "description": "Authentication token, prefixed by Bearer: Bearer \u003ctoken\u003e",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "bearer": []
+    }
+  ]
+}

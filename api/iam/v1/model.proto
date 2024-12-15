@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package iam.v1;
+
+option go_package = "gitee.com/qciip-icp/v-trace/api/iam/v1;v1";
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/struct.proto";
+
+message User {
+  // 唯一用户名
+  google.protobuf.StringValue username = 1;
+  // 用户暱称
+  google.protobuf.StringValue nickname = 2;
+  // 用户角色
+  google.protobuf.StringValue role = 3;
+  // 手机
+  google.protobuf.StringValue phone = 4;
+  // 邮箱
+  google.protobuf.StringValue email = 5;
+  // 注册时间
+  google.protobuf.Timestamp create_at = 6;
+  // 实际姓名
+  google.protobuf.StringValue realname = 7;
+  // 身份证号
+  google.protobuf.StringValue idcard = 8;
+  // id
+  google.protobuf.Int64Value id = 9;
+  // 头像
+  string avatar = 10;
+  // 用户状态 （正常/true|已删除/false）
+  Status status = 11;
+}
+
+message Org {
+  // id
+  google.protobuf.Int64Value id = 1;
+  // 企业名称
+  google.protobuf.StringValue org_name = 2;
+  // 企业社会信用代码
+  google.protobuf.StringValue org_code = 3;
+  // 企业法人姓名
+  google.protobuf.StringValue legal_person_name = 4;
+  // 企业法人手机号
+  google.protobuf.StringValue legal_person_phone = 5;
+  // 企业所有者或管理员
+  google.protobuf.StringValue owner = 6;
+  // 企业信息(json)
+  google.protobuf.BytesValue org_info = 7;
+}
+
+enum Role {
+  admin = 0;
+  producer = 1;
+  transporter = 2;
+  examiner = 3;
+  normal = 4;
+  boss = 5;
+}
+
+enum Status {
+  enable = 0;
+  deleted = 1;
+}

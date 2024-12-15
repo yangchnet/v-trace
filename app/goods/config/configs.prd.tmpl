@@ -1,0 +1,26 @@
+grpc:
+  network: tcp
+  address: 0.0.0.0:0
+  timeout: 1s
+data:
+  database:
+    driver: mysql
+    dsn: root:$DB_PASSWORD@tcp(vtrace_mysql:13306)/goods?parseTime=true&charset=utf8mb4&loc=Local
+  redis:
+    host: vtrace_redis
+    port: 16379
+    password:
+    db: 0
+etcd:
+  addresses:
+    - registry-etcd:2379
+  namespace: v-trace
+log:
+  level: 0 # 0: debug, 1: info, 2: warn, 3: error, 4: panic, 5, fatal
+  formatter: text # text/json
+  disable_caller: false # log中不记录文件名及行号
+  disable_color: false # 无颜色输出log
+  enable_abs_path: false # 输出文件名的完整的路径
+  enable_func: false # 输出打印log的函数名
+  ignore_basic_fields: false # 日志中不记录时间、文件等信息
+  output_file: tmp/log/goods.log

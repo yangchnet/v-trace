@@ -1,0 +1,81 @@
+chain_id: chain1
+version: v2.3.0
+sequence: 0
+auth_type: permissionedWithCert
+crypto:
+  hash: SHA256
+contract:
+  enable_sql_support: false
+vm:
+  addr_type: 2
+  support_list:
+    - wasmer
+    - gasm
+    - evm
+    - dockergo
+    - wxvm
+block:
+  tx_timestamp_verify: true
+  tx_timeout: 600
+  block_tx_capacity: 100
+  block_size: 10
+  block_interval: 10
+core:
+  tx_scheduler_timeout: 0
+  tx_scheduler_validate_timeout: 10
+  enable_sender_group: false
+  enable_conflicts_bit_window: true
+snapshot: null
+scheduler: null
+account_config:
+  enable_gas: false
+  gas_count: 0
+  default_gas: 0
+consensus:
+  type: 0
+  nodes:
+    - org_id: org1
+      node_id:
+        - QmesSBpJuHu6FdbkmkjWbMnGn6nXjnWE8MimiBaSiEp722
+  ext_config: []
+trust_roots:
+  - org_id: org1
+    root:
+      - ../config/org1/certs/ca/org1/ca.crt
+resource_policies:
+  - resource_name: CHAIN_CONFIG-BLOCK_UPDATE
+    policy:
+      rule: MAJORITY
+      org_list: []
+      role_list:
+        - admin
+  - resource_name: CONTRACT_MANAGE-INIT_CONTRACT
+    policy:
+      rule: MAJORITY
+      org_list: []
+      role_list:
+        - admin
+  - resource_name: CONTRACT_MANAGE-UPGRADE_CONTRACT
+    policy:
+      rule: MAJORITY
+      org_list: []
+      role_list:
+        - admin
+  - resource_name: CONTRACT_MANAGE-FREEZE_CONTRACT
+    policy:
+      rule: MAJORITY
+      org_list: []
+      role_list:
+        - admin
+  - resource_name: CONTRACT_MANAGE-UNFREEZE_CONTRACT
+    policy:
+      rule: MAJORITY
+      org_list: []
+      role_list:
+        - admin
+  - resource_name: CONTRACT_MANAGE-REVOKE_CONTRACT
+    policy:
+      rule: MAJORITY
+      org_list: []
+      role_list:
+        - admin

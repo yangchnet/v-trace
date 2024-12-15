@@ -1,0 +1,115 @@
+syntax = "proto3";
+
+package circ.v1;
+
+option go_package = "gitee.com/qciip-icp/v-trace/api/circ/v1;v1";
+
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/timestamp.proto";
+import "circ/v1/model.proto";
+
+service CircService {
+  // CreateCirc 新增流转记录
+  rpc CreateCirc(CreateCircRequest) returns (CreateCircResponse) {};
+  // 批量流转
+  rpc BatchCirc(BatchCircRequest) returns (BatchCircResponse) {};
+  // GetCirc 根据流转id获取流转记录
+  rpc GetCirc(GetCircRequest) returns (circ.v1.CircRecord) {};
+  // 根据transId获取流转记录
+  rpc GetCircByTransId(GetCircByTransIdRequest) returns (circ.v1.CircRecord) {};
+  // 根据商品id获取流转记录
+  rpc GetCircByGoodsId(GetCircByGoodsIdRequest)
+      returns (GetCircByGoodsIdResponse) {};
+  // 为商品生成transId
+  rpc TransId(TransIdRequest) returns (TransIdResponse) {};
+  // 批量为商品生成transId
+  rpc BatchTransId(BatchTransIdRequest) returns (BatchTransIdResponse) {};
+  // 更新流转记录状态
+  rpc UpdateCircStatus(UpdateCircStatusRequest)
+      returns (UpdateCircStatusResponse) {};
+}
+
+message CreateCircRequest {
+  // transId 用于标记此次流转
+  // 其格式为：[流转次数]-[产品id]-[流转时间]
+  string trans_id = 2;
+  // 流转类型
+  CircType circ_type = 3;
+  // 流转执行者
+  string operator = 4;
+
+  // 实体来源用户
+  // 流转类型为"produce"时，此字段为空
+  // 流转类型为"process"、"exam"或"transfer"时，此字段为操作者本身用户名
+  google.protobuf.StringValue from = 5;
+
+  // 实体目标用户
+  // 流转类型为"produce"、"process", "exam"时，此字段为操作者
+  // 流转类型为"transfer"时，此字段为要转交的用户的用户名
+  string to = 6;
+
+  // 表单json数据
+  google.protobuf.BytesValue form_info = 7;
+}
+
+message CreateCircResponse {
+  // 流转历史记录编号
+  google.protobuf.Int64Value circ_id = 1;
+}
+
+message BatchCircRequest {
+  // 流转号
+  repeated string trans_ids = 2;
+  // 流转类型
+  CircType circ_type = 3;
+  // 流转参与者
+  string operator = 4;
+  // from, 当流转类型为"Produce"时为空
+  google.protobuf.StringValue from = 5;
+  // to, 当流转类型为Transfer时不为空
+  google.protobuf.StringValue to = 6;
+  // 表单json数据
+  google.protobuf.BytesValue form_info = 7;
+}
+
+message BatchCircResponse { repeated int32 circ_ids = 1; }
+
+message GetCircRequest {
+  // 流转历史记录编号
+  int64 circ_id = 1;
+}
+
+message GetCircByTransIdRequest {
+  // transId
+  string trans_id = 1;
+}
+
+message GetCircByGoodsIdRequest {
+  // 商品id
+  int64 goods_id = 1;
+}
+
+message GetCircByGoodsIdResponse {
+  // 流转历史记录列表
+  repeated circ.v1.CircRecord records = 1;
+}
+
+message TransIdRequest {
+  // 商品id
+  int32 goods_id = 1;
+}
+
+message TransIdResponse { string trans_id = 1; }
+
+message UpdateCircStatusRequest {
+  string trans_id = 1;
+  circ.v1.RecordStatus status = 2;
+}
+
+message UpdateCircStatusResponse {}
+
+message BatchTransIdRequest { repeated int32 goods_ids = 1; }
+
+message BatchTransIdResponse { map<int32, string> transIds = 1; }

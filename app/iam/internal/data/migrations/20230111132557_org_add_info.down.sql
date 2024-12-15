@@ -1,0 +1,1 @@
+ALTER TABLE `org` DROP `info`;

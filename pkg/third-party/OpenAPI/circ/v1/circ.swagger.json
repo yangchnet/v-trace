@@ -1,0 +1,177 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "circ/v1/circ.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "CircService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {},
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1BatchCircResponse": {
+      "type": "object",
+      "properties": {
+        "circIds": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      }
+    },
+    "v1BatchTransIdResponse": {
+      "type": "object",
+      "properties": {
+        "transIds": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "v1CircRecord": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "id"
+        },
+        "objectId": {
+          "type": "string",
+          "format": "int64",
+          "title": "流转主体id（一般为商品id）"
+        },
+        "circType": {
+          "$ref": "#/definitions/v1CircType",
+          "title": "流转类型"
+        },
+        "Operator": {
+          "type": "string",
+          "title": "流转操作者"
+        },
+        "from": {
+          "type": "string",
+          "title": "from"
+        },
+        "to": {
+          "type": "string",
+          "title": "to"
+        },
+        "fromValue": {
+          "type": "string",
+          "title": "formValue"
+        },
+        "txHash": {
+          "type": "string",
+          "title": "txHash"
+        },
+        "transId": {
+          "type": "string",
+          "title": "transId"
+        },
+        "times": {
+          "type": "string",
+          "format": "int64",
+          "title": "times"
+        },
+        "status": {
+          "type": "string",
+          "title": "status"
+        }
+      }
+    },
+    "v1CircType": {
+      "type": "string",
+      "enum": [
+        "produce",
+        "process",
+        "transfer",
+        "exam"
+      ],
+      "default": "produce",
+      "title": "- produce: 生产\n - process: 一般流程\n - transfer: 转交\n - exam: 核验"
+    },
+    "v1CreateCircResponse": {
+      "type": "object",
+      "properties": {
+        "circId": {
+          "type": "string",
+          "format": "int64",
+          "title": "流转历史记录编号"
+        }
+      }
+    },
+    "v1GetCircByGoodsIdResponse": {
+      "type": "object",
+      "properties": {
+        "records": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1CircRecord"
+          },
+          "title": "流转历史记录列表"
+        }
+      }
+    },
+    "v1RecordStatus": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "failed",
+        "success"
+      ],
+      "default": "pending",
+      "title": "- pending: 进行中\n - failed: 已失败\n - success: 已成功"
+    },
+    "v1TransIdResponse": {
+      "type": "object",
+      "properties": {
+        "transId": {
+          "type": "string"
+        }
+      }
+    },
+    "v1UpdateCircStatusResponse": {
+      "type": "object"
+    }
+  }
+}

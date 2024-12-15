@@ -1,0 +1,269 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "trans/v1/trans.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "TransService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {},
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1AddProcessResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/v1OperationResult"
+        }
+      }
+    },
+    "v1ApproveResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/v1OperationResult"
+        }
+      }
+    },
+    "v1BatchBurnResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/v1OperationResult"
+        }
+      }
+    },
+    "v1BatchMintResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/v1OperationResult"
+        }
+      }
+    },
+    "v1BatchProcessResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/v1OperationResult"
+        }
+      }
+    },
+    "v1BatchTransformResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/v1OperationResult"
+        }
+      }
+    },
+    "v1BurnResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/v1OperationResult",
+          "title": "操作结果"
+        }
+      }
+    },
+    "v1GetTransResponse": {
+      "type": "object",
+      "properties": {
+        "trans": {
+          "$ref": "#/definitions/v1TransRecord"
+        }
+      }
+    },
+    "v1GrantRoleResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/v1OperationResult",
+          "title": "操作结果"
+        }
+      }
+    },
+    "v1Identity": {
+      "type": "object",
+      "properties": {
+        "cert": {
+          "type": "string",
+          "format": "byte",
+          "title": "用户证书sign"
+        },
+        "key": {
+          "type": "string",
+          "format": "byte",
+          "title": "用户私钥sign"
+        },
+        "username": {
+          "type": "string",
+          "title": "用户名"
+        },
+        "tlsCert": {
+          "type": "string",
+          "format": "byte",
+          "title": "tls证书"
+        },
+        "tlsKey": {
+          "type": "string",
+          "format": "byte",
+          "title": "tls私钥"
+        }
+      },
+      "title": "用于标识上链操作者身份"
+    },
+    "v1ListTransByObjResponse": {
+      "type": "object"
+    },
+    "v1MintResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/v1OperationResult",
+          "title": "操作结果"
+        }
+      }
+    },
+    "v1NameResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/v1OperationResult",
+          "title": "操作结果"
+        }
+      }
+    },
+    "v1OperationResult": {
+      "type": "string",
+      "enum": [
+        "SUCCESS",
+        "FAIL"
+      ],
+      "default": "SUCCESS"
+    },
+    "v1SetApproveForAllResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/v1OperationResult",
+          "title": "操作结果"
+        }
+      }
+    },
+    "v1SymbolResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/v1OperationResult",
+          "title": "操作结果"
+        }
+      }
+    },
+    "v1TransRecord": {
+      "type": "object",
+      "properties": {
+        "ID": {
+          "type": "string",
+          "format": "int64",
+          "title": "id"
+        },
+        "transId": {
+          "type": "string",
+          "title": "transID"
+        },
+        "sender": {
+          "type": "string",
+          "title": "交易发送者"
+        },
+        "contract": {
+          "type": "string",
+          "title": "调用合约名"
+        },
+        "method": {
+          "type": "string",
+          "title": "调用方法名"
+        },
+        "params": {
+          "type": "string",
+          "format": "byte",
+          "title": "参数"
+        },
+        "status": {
+          "type": "string",
+          "title": "状态"
+        },
+        "txHash": {
+          "type": "string",
+          "title": "交易hash"
+        },
+        "txParamsHash": {
+          "type": "string",
+          "title": "交易参数hash"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更改时间"
+        }
+      }
+    },
+    "v1TransferResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/v1OperationResult",
+          "title": "操作结果"
+        }
+      }
+    },
+    "v1UpdateTransResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/v1OperationResult"
+        }
+      }
+    }
+  }
+}

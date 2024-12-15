@@ -1,0 +1,384 @@
+syntax = "proto3";
+
+package vtrace.v1;
+
+option go_package = "gitee.com/qciip-icp/v-trace/api/vtrace/v1;v1";
+
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "algo/v1/model.proto";
+import "circ/v1/model.proto";
+import "goods/v1/model.proto";
+import "iam/v1/model.proto";
+
+// ====================================================================
+// Register
+// FIXME: 增加验证
+message RegisterRequest {
+  // 电话
+  string phone = 1;
+  // 暱称(nickname)
+  string nickname = 2;
+  // 密码
+  string passwd = 3;
+}
+
+message RegisterResponse {
+  // 唯一用户名
+  iam.v1.User user = 1;
+  // token
+  google.protobuf.StringValue token = 2;
+}
+
+// ====================================================================
+// Token
+message TokenRequest {
+  // 电话号码
+  string phone = 1;
+  // 密码
+  string password = 2;
+}
+
+message TokenResponse {
+  string token = 1;
+  // google.protobuf.Duration expiration = 2;
+}
+
+message RefreshTokenRequest {}
+
+message RefreshTokenResponse {
+  // token
+  string token = 1;
+}
+
+message ProfileRequest {}
+
+message ProfileResponse { iam.v1.User user = 1; }
+
+message UpdateInfoRequest {
+  // 暱称
+  google.protobuf.StringValue nickname = 2;
+  // 邮箱
+  google.protobuf.StringValue email = 3;
+  // 密码
+  google.protobuf.StringValue password = 4;
+}
+
+message IdentityAuthRequest {
+  // 真实姓名
+  string realname = 1;
+  // 身份证号
+  string idcard = 2;
+  // 唯一用户名
+  string username = 3;
+}
+
+message IdentityAuthResponse { iam.v1.User user = 1; }
+
+message OrgAuthRequest {
+  // 法人姓名
+  string legal_name = 1;
+  // 企业全名
+  string org_name = 2;
+  // 社会信用代码
+  string code = 3;
+  // 法人手机号
+  string legal_phone = 4;
+  // 企业其他信息
+  google.protobuf.BytesValue org_info = 5;
+}
+
+message OrgAuthResponse { iam.v1.Org org = 1; }
+
+message ContractNameRequest {}
+
+message ContractNameResponse { google.protobuf.StringValue contract_name = 1; }
+
+message CreateGoodsClassRequest {
+  // 产品类型名称
+  string goods_name = 1;
+  // 产品类型说明(json)
+  google.protobuf.BytesValue goods_des = 2;
+  // 产品类型配料id
+  int32 material_id = 3;
+  // 商标编号(optional)
+  google.protobuf.StringValue tm = 5;
+}
+
+message CreateGoodsClassResponse {
+  // 产品类别号
+  google.protobuf.Int64Value class_id = 2;
+}
+
+message CreateGoodsSerialRequest {
+  // 生产日期
+  google.protobuf.Timestamp product_time = 1;
+  // 产品种类号
+  int32 class_id = 2;
+}
+
+message CreateGoodsSerialResponse {
+  // 产品批次id
+  google.protobuf.Int64Value serial_id = 2;
+}
+
+// 批量创建产品
+message BatchCreateGoodsRequest {
+  // 产品批次id
+  int32 serial_id = 1;
+  // 本批次产品数量
+  int32 sum = 2;
+}
+
+message BatchCreateGoodsResponse {
+  // 产品编号列表
+  repeated google.protobuf.Int64Value ids = 2;
+  // 成功的数量
+  int32 successes = 3;
+}
+
+// 获得产品
+message GetGoodsRequest { int32 goods_id = 1; }
+
+message GetGoodsResponse { goods.v1.Goods good = 1; }
+
+// 列出产品
+message ListGoodsRequest {
+  // 页偏移
+  int32 offset = 1;
+  // 页容量
+  int32 limit = 2;
+}
+
+message ListGoodsResponse { repeated goods.v1.Goods goods = 1; }
+
+// 更新产品
+message UpdateGoodsRequest {
+  // 待更新商品
+  goods.v1.Goods goods = 1;
+}
+
+message UpdateGoodsResponse { bool ok = 1; }
+
+// GetClass 获取类型
+message GetClassRequest {
+  // 产品类别号
+  int32 goods_id = 1;
+}
+
+message GetClassResponse {
+  // 产品类别号
+  goods.v1.Class class = 1;
+}
+
+// 列出产品类型
+message ListClassRequest {
+  // 页偏移
+  int32 offset = 1;
+  // 页容量
+  int32 limit = 2;
+}
+
+message ListClassResponse {
+  // 产品类型列表
+  repeated goods.v1.Class goods_classes = 1;
+}
+
+// 更新产品类型信息
+message UpdateClassRequest {
+  // 待更新信息
+  goods.v1.Class class = 2;
+}
+
+message UpdateClassResponse { bool ok = 1; }
+
+// GetGoodsSerial 获取批次
+message GetGoodsSerialRequest {
+  // 产品种类号
+  int32 serial_id = 1;
+}
+
+message GetGoodsSerialResponse {
+  // 产品批次号
+  goods.v1.Serial serial = 1;
+}
+
+// 列出产品批次
+message ListGoodsSerialRequest {
+  // 页偏移
+  int32 offset = 1;
+  // 页容量
+  int32 limit = 2;
+}
+
+message ListGoodsSerialResponse {
+  // 产品编号列表
+  repeated goods.v1.Serial serial = 2;
+}
+
+message UpdateGoodsSerialRequest {
+  // 待更新产品批次
+  goods.v1.Serial serial = 1;
+}
+
+message UpdateGoodsSerialResponse { bool ok = 1; }
+
+message CreateCircRequest {
+  // 商品id
+  int32 goods_id = 1;
+  // 流转类型
+  circ.v1.CircType circ_type = 2;
+  // 实体来源用户
+  // 流转类型为"produce"时，此字段为空
+  // 流转类型为"process"、"exam"或"transfer"时，此字段为操作者本身用户名
+  google.protobuf.StringValue from = 3;
+
+  // 实体目标用户
+  // 流转类型为"produce"、"process", "exam"时，此字段为操作者
+  // 流转类型为"transfer"时，此字段为要转交的用户的用户名
+  string to = 4;
+  // 表单数据
+  google.protobuf.BytesValue form_value = 5;
+}
+
+message CreateCircResponse {
+  // 流转信息id
+  google.protobuf.Int64Value circ_id = 1;
+  // transId
+  google.protobuf.StringValue trans_id = 2;
+}
+
+message GetCircRequest {
+  // 商品id
+  int32 goods_id = 1;
+}
+
+message GetCircResponse {
+  // 商品信息
+  goods.v1.Goods goods_info = 1;
+  // 流转记录
+  repeated circ.v1.CircRecord circ_records = 2;
+}
+
+message ListMaterialRequest {}
+
+message ListMaterialResponse {
+  // 原料列表
+  repeated algo.v1.Material materials = 1;
+}
+
+message ListModelsRequest {}
+
+message ListModelsResponse {
+  // 算法模型列表
+  repeated algo.v1.Model models = 1;
+}
+
+message PredictRequest {
+  // 模型名
+  string model_name = 1;
+  // 用于预测的数据
+  bytes data = 2;
+}
+
+message PredictResponse {
+  // 预测结果
+  algo.v1.Material material = 1;
+}
+
+message MemberRequest {
+  // org id
+  int32 org_id = 1;
+  // username
+  string username = 2;
+}
+
+message MemberResponse {}
+
+message UploadRequest {
+  // 文件内容(base64)
+  bytes content = 1;
+  // 文件元信息(可选)
+  repeated metadata mds = 2;
+
+  message metadata {
+    string key = 1;
+    string value = 2;
+  }
+}
+
+message UploadResponse {
+  // 文件url
+  string url = 1;
+}
+
+message DeleteUserRequest { string username = 1; }
+
+message DeleteUserResponse {}
+
+// UpdateUser 用户信息更新
+message UpdateUserRequest { iam.v1.User user = 1; }
+
+message UpdateUserResponse { iam.v1.User user = 1; }
+
+// GetOrgUser 查询用户所属企业
+message GetOrgOfUserRequest {
+  // 唯一用户名
+  string username = 1;
+}
+
+message GetOrgOfUserResponse { iam.v1.Org org = 1; }
+
+// RemoveOrgMember 企业删除成员
+message OrgRemoveMemberRequest {
+  // org id
+  int32 org_id = 1;
+  // 用户名
+  string username = 2;
+}
+
+message OrgRemoveMemberResponse { bool ok = 1; }
+
+message RemoveRoleResponse { bool ok = 1; }
+
+// 企业查询成员列表
+message ListOrgMemberRequest {
+  int32 org_id = 1;
+  // 页偏移
+  int32 offset = 2;
+  // 页容量
+  int32 limit = 3;
+}
+
+message ListOrgMemberResponse { repeated iam.v1.User users = 1; }
+
+// UpdateOrg 企业信息更新
+message UpdateOrgRequest {
+  // 待更新企业
+  iam.v1.Org org = 1;
+}
+
+message UpdateOrgResponse { iam.v1.Org org = 1; }
+
+message BatchCircRequest {
+  // 商品编号列表
+  repeated int32 goods_ids = 1;
+  // 流转类型
+  circ.v1.CircType circ_type = 3;
+  // 流转参与者
+  string operator = 4;
+  // from, 当流转类型为"Produce"时为空
+  google.protobuf.StringValue from = 5;
+  // to, 当流转类型为Transfer时不为空
+  google.protobuf.StringValue to = 6;
+  // 表单json数据
+  google.protobuf.BytesValue form_info = 7;
+}
+
+message BatchCircResponse {
+  // goodsId => transId
+  map<int32, string> goodsId2transId = 1;
+}

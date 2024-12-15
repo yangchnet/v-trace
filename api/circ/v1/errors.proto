@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package circ.v1;
+
+option go_package = "gitee.com/qciip-icp/v-trace/api/circ/v1;v1";
+
+import "error/error.proto";
+
+enum Error {
+  // 默认500
+  option (errors.default_code) = 500;
+
+  // 创建流转记录失败
+  CREATE_CIRC_FAILED = 0 [ (errors.code) = 500 ];
+
+  // 流转记录不存在
+  CIRC_NOT_FOUND = 1 [ (errors.code) = 404 ];
+
+  // 参数错误
+  INVALID_PARAMS = 2 [ (errors.code) = 400 ];
+
+  // 流转记录已存在
+  CIRC_ALREADY_EXIST = 3 [ (errors.code) = 400 ];
+
+  // 当前操作者非产品所有者
+  NOT_OWNER = 4 [ (errors.code) = 400 ];
+}

@@ -1,0 +1,277 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "iam/v1/iam.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "IamService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {},
+  "definitions": {
+    "googlerpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "iamv1Status": {
+      "type": "string",
+      "enum": [
+        "enable",
+        "deleted"
+      ],
+      "default": "enable"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "v1CreateIdentityResponse": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/v1User"
+        }
+      }
+    },
+    "v1CreateOrgResponse": {
+      "type": "object",
+      "properties": {
+        "org": {
+          "$ref": "#/definitions/v1Org"
+        }
+      }
+    },
+    "v1CreateUserResponse": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/v1User"
+        }
+      }
+    },
+    "v1DeleteOrgMemberResponse": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "type": "boolean"
+        }
+      }
+    },
+    "v1DeleteUserResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/v1OperationResult",
+          "title": "操作结果"
+        }
+      }
+    },
+    "v1GetOrgOfUserResponse": {
+      "type": "object",
+      "properties": {
+        "org": {
+          "$ref": "#/definitions/v1Org"
+        }
+      }
+    },
+    "v1GetOrgResponse": {
+      "type": "object",
+      "properties": {
+        "org": {
+          "$ref": "#/definitions/v1Org"
+        }
+      }
+    },
+    "v1GetRoleResponse": {
+      "type": "object",
+      "properties": {
+        "role": {
+          "type": "string"
+        }
+      }
+    },
+    "v1GetUserResponse": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/v1User",
+          "title": "用户信息"
+        }
+      }
+    },
+    "v1ListOrgMemberResponse": {
+      "type": "object",
+      "properties": {
+        "users": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1User"
+          }
+        }
+      }
+    },
+    "v1OperationResult": {
+      "type": "string",
+      "enum": [
+        "SUCCESS",
+        "FAIL"
+      ],
+      "default": "SUCCESS"
+    },
+    "v1Org": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "id"
+        },
+        "orgName": {
+          "type": "string",
+          "title": "企业名称"
+        },
+        "orgCode": {
+          "type": "string",
+          "title": "企业社会信用代码"
+        },
+        "legalPersonName": {
+          "type": "string",
+          "title": "企业法人姓名"
+        },
+        "legalPersonPhone": {
+          "type": "string",
+          "title": "企业法人手机号"
+        },
+        "owner": {
+          "type": "string",
+          "title": "企业所有者或管理员"
+        },
+        "orgInfo": {
+          "type": "string",
+          "format": "byte",
+          "title": "企业信息(json)"
+        }
+      }
+    },
+    "v1OrgAddMemberResponse": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "type": "boolean"
+        }
+      }
+    },
+    "v1RefreshTokenResponse": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "title": "token"
+        }
+      }
+    },
+    "v1TokenResponse": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "title": "token"
+        }
+      }
+    },
+    "v1UpdateOrgResponse": {
+      "type": "object",
+      "properties": {
+        "org": {
+          "$ref": "#/definitions/v1Org"
+        }
+      }
+    },
+    "v1UpdateUserResponse": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/v1User"
+        }
+      }
+    },
+    "v1User": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "title": "唯一用户名"
+        },
+        "nickname": {
+          "type": "string",
+          "title": "用户暱称"
+        },
+        "role": {
+          "type": "string",
+          "title": "用户角色"
+        },
+        "phone": {
+          "type": "string",
+          "title": "手机"
+        },
+        "email": {
+          "type": "string",
+          "title": "邮箱"
+        },
+        "createAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "注册时间"
+        },
+        "realname": {
+          "type": "string",
+          "title": "实际姓名"
+        },
+        "idcard": {
+          "type": "string",
+          "title": "身份证号"
+        },
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "id"
+        },
+        "avatar": {
+          "type": "string",
+          "title": "头像"
+        },
+        "status": {
+          "$ref": "#/definitions/iamv1Status",
+          "title": "用户状态 （正常/true|已删除/false）"
+        }
+      }
+    }
+  }
+}

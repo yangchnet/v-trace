@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package goods.v1;
+
+option go_package = "gitee.com/qciip-icp/v-trace/api/goods/v1;v1";
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "goods/v1/model.proto";
+import "error/error.proto";
+
+enum Error {
+  // 默认500
+  option (errors.default_code) = 500;
+
+  // 未找到产品
+  GOODS_NOT_FOUND = 0 [ (errors.code) = 404 ];
+
+  // 产品类未找到
+  GOODS_CLASS_NOT_FOUND = 1 [ (errors.code) = 404 ];
+
+  // 产品批次未找到
+  GOODS_SERIAL_NOT_FOUND = 2 [ (errors.code) = 404 ];
+
+  // 创建产品类别失败
+  GOODS_CLASS_CREATE_FAILED = 3 [ (errors.code) = 500 ];
+
+  // 创建产品批次失败
+  GOODS_SERIAL_CREATE_FAILED = 4 [ (errors.code) = 500 ];
+
+  // 创建产品失败
+  GOODS_CREATE_FAILED = 5 [ (errors.code) = 500 ];
+
+  // 无权限
+  PERMISSION_DENY = 6 [ (errors.code) = 403 ];
+}

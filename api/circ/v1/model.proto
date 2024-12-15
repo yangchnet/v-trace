@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package circ.v1;
+
+option go_package = "gitee.com/qciip-icp/v-trace/api/circ/v1;v1";
+
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/timestamp.proto";
+
+enum CircType {
+  // 生产
+  produce = 0;
+  // 一般流程
+  process = 1;
+  // 转交
+  transfer = 3;
+  // 核验
+  exam = 4;
+}
+
+enum RecordStatus {
+  // 进行中
+  pending = 0;
+  // 已失败
+  failed = 1;
+  // 已成功
+  success = 2;
+}
+
+message CircRecord {
+  // id
+  google.protobuf.Int64Value id = 9;
+  // 流转主体id（一般为商品id）
+  google.protobuf.Int64Value object_id = 1;
+  // 流转类型
+  CircType circ_type = 2;
+  // 流转操作者
+  google.protobuf.StringValue Operator = 3;
+  // from
+  google.protobuf.StringValue from = 4;
+  // to
+  google.protobuf.StringValue to = 5;
+  // formValue
+  google.protobuf.StringValue from_value = 6;
+  // txHash
+  google.protobuf.StringValue tx_hash = 7;
+  // transId
+  google.protobuf.StringValue trans_id = 8;
+  // times
+  google.protobuf.Int64Value times = 10;
+  // status
+  google.protobuf.StringValue status = 11;
+}

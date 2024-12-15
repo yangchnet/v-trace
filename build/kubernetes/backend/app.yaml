@@ -1,0 +1,179 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iam-dp
+spec:
+  selector:
+    matchLabels:
+      app: iam
+  template:
+    metadata:
+      labels:
+        app: iam
+    spec:
+      containers:
+        - name: iam
+          image: dockerslc/vtrace-iam:latest
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "1024Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 10102
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: algo-dp
+spec:
+  selector:
+    matchLabels:
+      app: algo
+  template:
+    metadata:
+      labels:
+        app: algo
+    spec:
+      containers:
+        - name: algo
+          image: dockerslc/vtrace-algo:latest
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "1024Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 10108
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ca-dp
+spec:
+  selector:
+    matchLabels:
+      app: ca
+  template:
+    metadata:
+      labels:
+        app: ca
+    spec:
+      containers:
+        - name: ca
+          image: dockerslc/vtrace-ca:latest
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "1024Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 10105
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: circ-dp
+spec:
+  selector:
+    matchLabels:
+      app: circ
+  template:
+    metadata:
+      labels:
+        app: circ
+    spec:
+      containers:
+        - name: circ
+          image: dockerslc/vtrace-circ:latest
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "1024Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 10103
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goods-dp
+spec:
+  selector:
+    matchLabels:
+      app: goods
+  template:
+    metadata:
+      labels:
+        app: goods
+    spec:
+      containers:
+        - name: goods
+          image: dockerslc/vtrace-goods:latest
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "1024Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 10107
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trans-dp
+spec:
+  selector:
+    matchLabels:
+      app: trans
+  template:
+    metadata:
+      labels:
+        app: trans
+    spec:
+      containers:
+        - name: trans
+          image: dockerslc/vtrace-trans:latest
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "1024Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 10106
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vtrace-dp
+  app: vtrace
+spec:
+  selector:
+    matchLabels:
+      app: vtrace
+  template:
+    metadata:
+      labels:
+        app: vtrace
+    spec:
+      containers:
+        - name: trans
+          image: dockerslc/vtrace-vtrace:latest
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "1024Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 10101
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vtrace-svc
+spec:
+  selector:
+    app: vtrace
+  ports:
+    - port: 10001
+      targetPort: 10001

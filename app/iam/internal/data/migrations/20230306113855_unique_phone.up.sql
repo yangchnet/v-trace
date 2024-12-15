@@ -1,0 +1,1 @@
+ALTER TABLE `user` MODIFY `phone` varchar(255) NOT NULL UNIQUE;

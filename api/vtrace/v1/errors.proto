@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package vtrace.v1;
+
+option go_package = "gitee.com/qciip-icp/v-trace/api/vtrace/v1;v1";
+
+import "error/error.proto";
+
+enum Error {
+  // 默认500
+  option (errors.default_code) = 500;
+
+  // 不允许的操作
+  PERMISSION_DENIED = 0 [ (errors.code) = 403 ];
+
+  // 服务未上线
+  SERVICE_OFFLINE = 1 [ (errors.code) = 500 ];
+}

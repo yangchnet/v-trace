@@ -1,0 +1,58 @@
+package data
+
+import (
+	"context"
+
+	entsql "entgo.io/ent/dialect/sql"
+	"entgo.io/ent/dialect/sql/schema"
+	"gitee.com/qciip-icp/v-trace/app/{{ .ServiceName }}/internal/conf"
+	"gitee.com/qciip-icp/v-trace/app/{{ .ServiceName }}/internal/data/ent"
+	"gitee.com/qciip-icp/v-trace/app/{{ .ServiceName }}/internal/biz"
+	"gitee.com/qciip-icp/v-trace/pkg/cache"
+	"gitee.com/qciip-icp/v-trace/pkg/logger"
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/google/wire"
+)
+
+// ProviderSet provided NewData and NewEnt.
+var ProviderSet = wire.NewSet(NewEnt, NewData, NewCache)
+
+// NewEnt create an ent client.
+func NewEnt(ctx context.Context, c *conf.Bootstrap) (*ent.Client, error) {
+	drv, err := entsql.Open(c.Data.Db.Driver, c.Data.Db.Dsn)
+	if err != nil {
+		logger.Error("Error creating database connection: %v", err)
+
+		return nil, err
+	}
+
+	client := ent.NewClient(ent.Driver(drv))
+
+	if err := client.Schema.Create(
+		ctx,
+		schema.WithDropIndex(true),
+		schema.WithDropColumn(true),
+		schema.WithForeignKeys(false),
+	); err != nil {
+		logger.Fatalf("failed creating schema resources: %v", err)
+	}
+
+	return client, nil
+}
+
+type Data struct {
+	db    *ent.Client
+	cache cache.Cache
+}
+
+func NewCache(ctx context.Context, c *conf.Bootstrap) *cache.RedisStore {
+	return cache.NewRedisStore(&c.Data.Redis)
+}
+
+// NewData creates a new data which is a biz.EchoRepo.
+func NewData(ctx context.Context, ec *ent.Client, cache cache.Cache) *Data {
+	return &Data{
+		db:    ec,
+		cache: cache,
+	}
+}

@@ -1,0 +1,52 @@
+syntax = "proto3";
+package goods.v1;
+
+option go_package = "gitee.com/qciip-icp/v-trace/api/goods/v1;v1";
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/struct.proto";
+
+message Class {
+  // id
+  google.protobuf.Int64Value ID = 1;
+  // 产品类别名称
+  google.protobuf.StringValue name = 2;
+  // 产品类别描述(json)
+  google.protobuf.BytesValue des = 3;
+  // 状态
+  google.protobuf.StringValue state = 4;
+  // 创建者
+  google.protobuf.StringValue creator = 5;
+  // 生产企业
+  google.protobuf.Int64Value org_id = 6;
+  // 商标
+  google.protobuf.StringValue tm = 7;
+  // 原料
+  google.protobuf.Int32Value material_id = 8;
+}
+
+message Serial {
+  // id
+  google.protobuf.Int64Value ID = 1;
+  // 生产日期
+  google.protobuf.Timestamp timestamp = 2;
+  // 状态
+  google.protobuf.StringValue state = 4;
+  // 创建者
+  google.protobuf.StringValue creator = 5;
+  // 类别
+  Class class = 6;
+}
+
+message Goods {
+  // id
+  google.protobuf.Int64Value ID = 1;
+  // 状态
+  google.protobuf.StringValue state = 4;
+  // 创建者
+  google.protobuf.StringValue creator = 5;
+  // 批次
+  Serial serial = 6;
+}

@@ -1,0 +1,1 @@
+ALTER TABLE `trans_record` DROP `tx_params_hash`;
